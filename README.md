@@ -11,7 +11,8 @@ Features
 Tech Stack
 Frontend: React, Redux, TailwindCSS
 Backend: Firebase
-Deployment: ?
+Build Tool : VS Code, Vite
+Deployment: 
 
 Installation
 
