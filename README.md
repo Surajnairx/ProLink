@@ -1,21 +1,8 @@
-# ProLink
-Overview
-A web application that mimics the core functionalities of LinkedIn, allowing users to create profiles, connect with others, share updates, and engage in professional networking.
+# React + Vite
 
-Features
-> User Authentication: Sign up and log in securely.
-> Profile Management: Create and edit user profiles, including skills, experiences, and education.
-> Networking: Send and accept connection requests.
-> Feed: Share updates, articles, and multimedia.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Tech Stack
-Frontend: React, Redux, TailwindCSS
-Backend: Firebase
-Build Tool : VS Code, Vite
-Deployment: 
+Currently, two official plugins are available:
 
-Installation
-
-Prerequisites
-Node.js
-Git
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
