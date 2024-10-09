@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { LoginAPI } from "../api/LoginAPI";
 import { Link } from "react-router-dom";
+import { RegisterAPI } from "../api/RegisterAPI";
 import Logo from "../assets/Logo.png";
 
-const LoginComponent = () => {
+const RegisterComponent = () => {
   const [credentails, setCredentials] = useState({});
 
-  const logIn = async () => {
+  const register = async () => {
     try {
-      let res = await LoginAPI(credentails.email, credentails.password);
+      let res = await RegisterAPI(credentails.email, credentails.password);
       console.log(res);
-      alert("Logged In Successfully");
+      alert("Account Created, User Registered");
     } catch (err) {
       alert(err.message);
     }
@@ -26,26 +26,29 @@ const LoginComponent = () => {
 
       <div className="flex flex-col gap-5 m-3 p-10">
         <div className="mb-3 flex flex-col gap-2">
-          <h1 className=" text-3xl font-bold">Sign in</h1>
-          <p className="font-normal text-2xl">
-            Stay updated on your professional world
-          </p>
+          <h1 className=" text-2xl font-bold">
+            Connect . Collaborate . Conquer
+          </h1>
         </div>
-
+        <label htmlFor="email" className="text-lg">
+          Email or phone number
+        </label>
         <input
           className="p-3 text-cyan-50 rounded-md"
           type="email"
           name="email"
-          placeholder="Email"
           onChange={(event) =>
             setCredentials({ ...credentails, email: event.target.value })
           }
         />
+        <label htmlFor="password" className="text-lg">
+          Password(6+ characters)
+        </label>
         <input
           className="p-3 text-cyan-50 rounded-md"
           type="password"
           name="password"
-          placeholder="Password"
+          max="6"
           onChange={(event) =>
             setCredentials({ ...credentails, password: event.target.value })
           }
@@ -54,15 +57,15 @@ const LoginComponent = () => {
           <button
             className="border-2 border-black w-full p-2.5 mb-3 rounded-3xl hover:bg-teal-400 hover:text-"
             type="button"
-            onClick={logIn}
+            onClick={register}
           >
-            Log In
+            Register
           </button>
 
           <p>
-            New to ProLink ?{" "}
-            <Link to="/register" className=" text-teal-400">
-              Join Now
+            Already on ProLink ?{" "}
+            <Link to="/" className=" text-teal-400">
+              Sign in
             </Link>
           </p>
         </div>
@@ -71,4 +74,4 @@ const LoginComponent = () => {
   );
 };
 
-export default LoginComponent;
+export default RegisterComponent;
