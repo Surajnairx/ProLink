@@ -26,7 +26,7 @@ const LoginComponent = () => {
       <img
         src={Logo}
         alt=""
-        className="w-[120px] rounded-full absolute top-[20px] left-[20px]"
+        className="w-[145px] rounded-full absolute top-[20px] left-[20px]"
       />
 
       <div className="flex flex-col gap-5 m-3 p-10">
