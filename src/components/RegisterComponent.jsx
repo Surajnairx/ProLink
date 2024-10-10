@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { RegisterAPI } from "../api/RegisterAPI";
+import { RegisterAPI } from "../api/API";
 import Logo from "../assets/Logo.png";
+import { toast } from "react-toastify";
 
 const RegisterComponent = () => {
   const [credentails, setCredentials] = useState({});
@@ -10,9 +11,11 @@ const RegisterComponent = () => {
     try {
       let res = await RegisterAPI(credentails.email, credentails.password);
       console.log(res);
-      alert("Account Created, User Registered");
+      toast.success("Account Created Successfully");
+      toast.success("You can now Sign in using the same credentials");
     } catch (err) {
-      alert(err.message);
+      toast.error("Email Already Registered");
+      console.log(err);
     }
   };
 

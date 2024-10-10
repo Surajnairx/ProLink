@@ -1,18 +1,23 @@
 import { useState } from "react";
-import { LoginAPI } from "../api/LoginAPI";
+import { LoginAPI } from "../api/API";
 import { Link } from "react-router-dom";
 import Logo from "../assets/Logo.png";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const LoginComponent = () => {
   const [credentails, setCredentials] = useState({});
+  let navigate = useNavigate();
 
   const logIn = async () => {
     try {
       let res = await LoginAPI(credentails.email, credentails.password);
       console.log(res);
-      alert("Logged In Successfully");
+      toast.success("Signed in Successfully");
+      navigate("/home");
     } catch (err) {
-      alert(err.message);
+      console.log(err);
+      toast.error("Password or Username is Incorrect");
     }
   };
 
