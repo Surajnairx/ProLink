@@ -8,12 +8,22 @@ import {
   AiOutlineBell,
 } from "react-icons/ai";
 import { BsBriefcase } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const NavbarComponent = () => {
+  let navigate = useNavigate();
+  const goToPage = (route) => {
+    navigate(route);
+  };
   return (
     <div className="w-full h-[70px] bg-slate-200 flex justify-around items-center">
       <div className="flex justify-center items-center gap-5">
-        <img className="w-[66px] rounded-lg " src={Logo} alt="" />
+        <img
+          className="w-[66px] rounded-lg cursor-pointer"
+          src={Logo}
+          alt=""
+          onClick={() => goToPage("/home")}
+        />
         <input
           type="text"
           name="search"
@@ -23,9 +33,21 @@ const Navbar = () => {
         <AiOutlineSearch className=" cursor-pointer" size={40} />
       </div>
       <div className="flex items-center gap-10">
-        <AiOutlineHome size={40} className="w-[55%] cursor-pointer" />
-        <AiOutlineUser size={40} className="w-[55%] cursor-pointer" />
-        <BsBriefcase size={40} className="w-[55%]  cursor-pointer" />
+        <AiOutlineHome
+          size={40}
+          className="w-[55%] cursor-pointer"
+          onClick={() => goToPage("/home")}
+        />
+        <AiOutlineUser
+          size={40}
+          className="w-[55%] cursor-pointer"
+          onClick={() => goToPage("/profile")}
+        />
+        <BsBriefcase
+          size={40}
+          className="w-[55%]  cursor-pointer"
+          onClick={() => goToPage("/jobs")}
+        />
         <AiOutlineMessage size={40} className="w-[55%]  cursor-pointer" />
         <AiOutlineBell size={40} className="w-[55%]  cursor-pointer" />
       </div>
@@ -36,4 +58,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavbarComponent;
