@@ -7,11 +7,11 @@ import Spinner from "../components/Spinner";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [loader, setLoader] = useState(true);
+  const [loader, setLoader] = useState(false);
   useEffect(() => {
     onAuthStateChanged(auth, (res) => {
-      if (!res.accessToken) {
-        navigate("/home");
+      if (!res?.accessToken) {
+        navigate("/");
       } else {
         setLoader(false);
       }

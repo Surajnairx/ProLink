@@ -14,6 +14,7 @@ const LoginComponent = () => {
       let res = await LoginAPI(credentails.email, credentails.password);
       console.log(res);
       toast.success("Signed in Successfully");
+      localStorage.setItem("user-email", res.user.email);
       navigate("/home");
     } catch (err) {
       console.log(err);

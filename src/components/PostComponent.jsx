@@ -1,16 +1,32 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import ModalComponent from "./ModalComponent";
-import { Post } from "../api/FirestoreAPI";
+import { Post, getPost } from "../api/FirestoreAPI";
+import PostCardComponent from "./PostCardComponent";
+import moment from "moment";
 
 const PostComponent = () => {
+  const timeStamp = () => {
+    return moment().format("MMMM Do YYYY, h:mm");
+  };
   const [modalOpen, setModalOpen] = useState(false);
   const [status, setStatus] = useState("");
-  const handleStatus = () => {
-    Post(status);
+  const [allPost, setAllPosts] = useState([]);
+
+  const handleStatus = async () => {
+    let object = {
+      post: status,
+      timeStamp: timeStamp(),
+    };
+    await Post(object);
+    await setModalOpen(false);
+    await setStatus("");
   };
+  useMemo(() => {
+    getPost(setAllPosts);
+  }, []);
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex flex-col justify-center items-center">
       <div className="bg-slate-200 w-1/3 h-[100px] m-[30px] border rounded-md flex justify-center items-center ">
         <button
           className="bg-slate-200 w-3/4 border-2  border-black p-3 text-start rounded-full text-slate-500 hover:bg-slate-300"
@@ -26,6 +42,11 @@ const PostComponent = () => {
         status={status}
         handleStatus={handleStatus}
       />
+      <div className="w-full flex flex-col justify-center items-center">
+        {allPost.map((post) => {
+          return <PostCardComponent key={post.id} post={post} />;
+        })}
+      </div>
     </div>
   );
 };

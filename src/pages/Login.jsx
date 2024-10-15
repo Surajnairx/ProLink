@@ -6,17 +6,17 @@ import { auth } from "../firebaseConfig";
 import Spinner from "../components/Spinner";
 
 const Login = () => {
-  const [loader, setLoader] = useState(true);
+  const [loader, setLoader] = useState(false);
   let navigate = useNavigate();
   useEffect(() => {
     onAuthStateChanged(auth, (res) => {
-      if (res.accessToken) {
+      if (res?.accessToken) {
         navigate("/home");
       } else {
         setLoader(false);
       }
     });
-  });
+  }, []);
   return loader ? <Spinner /> : <LoginComponent />;
 };
 

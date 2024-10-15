@@ -1,12 +1,11 @@
 import Navbar from "./NavbarComponent";
-import Post from "./PostComponent";
+import PostComponent from "./PostComponent";
 
 const HomeComponent = () => {
   return (
-    <div>
+    <div className="flex flex-col">
       <Navbar />
-      <Post />
-      <h1>Home Component</h1>
+      <PostComponent />
     </div>
   );
 };
