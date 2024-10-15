@@ -1,5 +1,6 @@
 import Logo from "../assets/HomeLogo.png";
 import User from "../assets/profile1.png";
+
 import {
   AiOutlineHome,
   AiOutlineSearch,
@@ -9,12 +10,20 @@ import {
 } from "react-icons/ai";
 import { BsBriefcase } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { onLogout } from "../api/API";
 
 const NavbarComponent = () => {
+  // const [popupVisible, setPopupVisible] = useState(false);
+
+  // const displayPopup = () => {
+  //   setPopupVisible(!popupVisible);
+  // };
+
   let navigate = useNavigate();
   const goToPage = (route) => {
     navigate(route);
   };
+
   return (
     <div className="w-full h-[70px] bg-slate-200 flex justify-around items-center">
       <div className="flex justify-center items-center gap-5">
@@ -52,7 +61,13 @@ const NavbarComponent = () => {
         <AiOutlineBell size={40} className="w-[55%]  cursor-pointer" />
       </div>
       <div>
-        <img className="w-[55px] rounded-lg  cursor-pointer " src={User} />
+        <button>
+          <img
+            className="w-[55px] rounded-lg  cursor-pointer "
+            src={User}
+            onClick={onLogout}
+          />
+        </button>
       </div>
     </div>
   );

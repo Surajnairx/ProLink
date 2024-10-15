@@ -1,6 +1,7 @@
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 
@@ -19,5 +20,13 @@ export const RegisterAPI = (email, password) => {
     return response;
   } catch (err) {
     return err;
+  }
+};
+
+export const onLogout = () => {
+  try {
+    signOut(auth);
+  } catch (err) {
+    console.log(err);
   }
 };
