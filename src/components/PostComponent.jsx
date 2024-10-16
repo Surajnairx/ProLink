@@ -1,12 +1,18 @@
+/* eslint-disable react/prop-types */
 import { useState, useMemo } from "react";
 import ModalComponent from "./ModalComponent";
 import { Post, getPost } from "../api/FirestoreAPI";
 import PostCardComponent from "./PostCardComponent";
 import moment from "moment";
+import uuid from "react-uuid";
 
-const PostComponent = () => {
+const PostComponent = ({ currUser }) => {
   const timeStamp = () => {
     return moment().format("MMMM Do YYYY, h:mm");
+  };
+  const getUniqueID = () => {
+    let id = uuid();
+    return id;
   };
   const [modalOpen, setModalOpen] = useState(false);
   const [status, setStatus] = useState("");
@@ -16,7 +22,12 @@ const PostComponent = () => {
     let object = {
       post: status,
       timeStamp: timeStamp(),
+      userEmail: await currUser.email,
+      userName: await currUser.name,
+      userID: await currUser.userID,
+      postID: getUniqueID(),
     };
+
     await Post(object);
     await setModalOpen(false);
     await setStatus("");

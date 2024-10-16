@@ -1,6 +1,8 @@
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import Logo from "../assets/HomeLogo.png";
 import User from "../assets/profile1.png";
-
+import ProfilePopup from "./ProfilePopup";
 import {
   AiOutlineHome,
   AiOutlineSearch,
@@ -10,14 +12,13 @@ import {
 } from "react-icons/ai";
 import { BsBriefcase } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { onLogout } from "../api/API";
 
-const NavbarComponent = () => {
-  // const [popupVisible, setPopupVisible] = useState(false);
+const NavbarComponent = ({ currUser }) => {
+  const [popupVisible, setPopupVisible] = useState(false);
 
-  // const displayPopup = () => {
-  //   setPopupVisible(!popupVisible);
-  // };
+  const displayPopup = () => {
+    setPopupVisible(!popupVisible);
+  };
 
   let navigate = useNavigate();
   const goToPage = (route) => {
@@ -60,14 +61,21 @@ const NavbarComponent = () => {
         <AiOutlineMessage size={40} className="w-[55%]  cursor-pointer" />
         <AiOutlineBell size={40} className="w-[55%]  cursor-pointer" />
       </div>
-      <div>
+      <div className="flex flex-col items-center">
         <button>
           <img
             className="w-[55px] rounded-lg  cursor-pointer "
             src={User}
-            onClick={onLogout}
+            onClick={displayPopup}
           />
         </button>
+        {popupVisible ? (
+          <div className="absolute top-16 z-[100]">
+            <ProfilePopup currUser={currUser} />
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

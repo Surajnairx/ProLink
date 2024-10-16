@@ -12,7 +12,6 @@ const LoginComponent = () => {
   const logIn = async () => {
     try {
       let res = await LoginAPI(credentails.email, credentails.password);
-      console.log(res);
       toast.success("Signed in Successfully");
       localStorage.setItem("user-email", res.user.email);
       navigate("/home");
@@ -58,7 +57,7 @@ const LoginComponent = () => {
         />
         <div className="flex flex-col justify-center">
           <button
-            className="border-2 border-black w-full p-2.5 mb-3 rounded-3xl hover:bg-teal-400 hover:text-"
+            className="border-2 border-black w-full p-2.5 mb-3 rounded-3xl hover:bg-teal-400"
             type="button"
             onClick={logIn}
           >

@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { RegisterAPI } from "../api/API";
 import Logo from "../assets/Logo.png";
+import { postUserData } from "../api/FirestoreAPI";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import uuid from "react-uuid";
 
 const RegisterComponent = () => {
   const [credentails, setCredentials] = useState({});
@@ -12,8 +14,12 @@ const RegisterComponent = () => {
   const register = async () => {
     try {
       let res = await RegisterAPI(credentails.email, credentails.password);
-      navigate("/");
-
+      navigate("/home");
+      postUserData({
+        userID: uuid(),
+        name: credentails.name,
+        email: credentails.email,
+      });
       toast.success("Account Created Successfully");
       localStorage.setItem("user-email", res.user.email);
     } catch (err) {
@@ -36,6 +42,19 @@ const RegisterComponent = () => {
             Connect . Collaborate . Conquer
           </h1>
         </div>
+
+        <label htmlFor="password" className="text-lg">
+          Enter your Name
+        </label>
+        <input
+          className="p-3 text-cyan-50 rounded-md"
+          type="name"
+          name="name"
+          onChange={(event) =>
+            setCredentials({ ...credentails, name: event.target.value })
+          }
+        />
+
         <label htmlFor="email" className="text-lg">
           Email or phone number
         </label>
@@ -47,6 +66,7 @@ const RegisterComponent = () => {
             setCredentials({ ...credentails, email: event.target.value })
           }
         />
+
         <label htmlFor="password" className="text-lg">
           Password(6+ characters)
         </label>
@@ -59,6 +79,7 @@ const RegisterComponent = () => {
             setCredentials({ ...credentails, password: event.target.value })
           }
         />
+
         <div className="flex flex-col justify-center">
           <button
             className="border-2 border-black w-full p-2.5 mb-3 rounded-3xl hover:bg-teal-400 hover:text-"
