@@ -2,7 +2,7 @@
 const ButtonComponent = ({ title, onClick }) => {
   return (
     <button
-      className=" mt-3 border-2 border-black w-auto p-2 rounded-xl hover:bg-black hover:text-teal-400"
+      className="  border-2 border-teal-400 p-1 rounded-xl hover:bg-black hover:text-teal-400 hover:border-black"
       onClick={onClick}
     >
       {title}

@@ -7,7 +7,9 @@ const ProfilePopup = ({ currUser }) => {
   let navigate = useNavigate();
 
   return (
-    <div className="flex flex-col w-auto rounded-lg shadow-xl bg-slate-200 mt-3 p-3 gap-3 z-[100] ">
+    <div className="flex flex-col rounded-lg shadow-xl bg-slate-200 m-7 p-5 gap-3 z-[100] ">
+      <p className=" font-extrabold text-2xl mt-10">{currUser.name}</p>
+      <p className="text-gray-500">{currUser.headline}</p>
       <ButtonComponent
         title="View Profile"
         onClick={() =>
