@@ -30,9 +30,6 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
             className=" text-4xl p-1 cursor-pointer hover:bg-slate-200 rounded-xl"
             onClick={onEdit}
           />
-          {/* <button className=" w-44 border-2 border-teal-400 p-1 rounded-xl hover:bg-black hover:text-teal-400 hover:border-black">
-            Edit
-          </button> */}
         </div>
         <h3 className="text-black font-bold text-2xl">
           {Object.values(currentProfile).length === 0
@@ -79,7 +76,7 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
       </div>
       <div className="w-auto h-auto bg-neutral-100 m-8 p-3 rounded-md ">
         <h1 className="font-bold text-xl mb-2">About</h1>
-        <pre className="font-poppins">
+        <pre className="font-poppins text-pretty ">
           {Object.values(currentProfile).length === 0
             ? currUser.about
             : currentProfile?.about}

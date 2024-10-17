@@ -27,8 +27,8 @@ const ModalComponent = ({
           </Button>,
         ]}
       >
-        <input
-          className="bg-white text-black font-[14px] border-2 w-full"
+        <textarea
+          className="bg-white text-black font-[14px] border-2 w-full h-[105px]"
           type="text"
           placeholder="What do you want to talk about ? "
           onChange={(e) => setStatus(e.target.value)}
