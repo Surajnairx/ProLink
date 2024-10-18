@@ -30,7 +30,11 @@ const PostCardComponent = ({ post }) => {
       <pre className=" p-4 text-wrap font-poppins text-[14px] font-bold text-black">
         {post.post}
       </pre>
-      <LikeButtonComponent userID={currUser?.userID} postID={post.postID} />
+      <LikeButtonComponent
+        currUser={currUser}
+        // userID={currUser?.userID}
+        postID={post.postID}
+      />
     </div>
   );
 };
