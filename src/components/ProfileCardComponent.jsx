@@ -3,13 +3,23 @@
 import { useState, useMemo } from "react";
 import PostCardComponent from "./PostCardComponent";
 import { getPost, getSingleUser, getSingleStatus } from "../api/FirestoreAPI";
+import { imageUpload } from "../api/ImageUploadAPI";
 import { useLocation } from "react-router-dom";
 import { HiOutlinePencil } from "react-icons/hi";
 
 const ProfileCardComponent = ({ currUser, onEdit }) => {
   const [allPost, setAllPosts] = useState([]);
   const [currentProfile, setCurrentProfile] = useState({});
+  const [currentImage, setCurrentImage] = useState({});
+
   let location = useLocation();
+  const getImage = (event) => {
+    setCurrentImage(event.target.files[0]);
+  };
+
+  const uploadImage = () => {
+    imageUpload(currentImage);
+  };
 
   useMemo(() => {
     if (location?.state?.id) {
@@ -25,6 +35,8 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
   return (
     <>
       <div className="w-auto h-auto bg-neutral-100 m-8 rounded-md p-3">
+        <input type="file" onChange={getImage} />
+        <button onClick={uploadImage}>Upload</button>
         <div className=" w-auto h-auto  absolute right-14  p2">
           <HiOutlinePencil
             className=" text-4xl p-1 cursor-pointer hover:bg-slate-200 rounded-xl"
@@ -37,26 +49,26 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
             : currentProfile?.name}
         </h3>
         <div className="flex justify-between mt-2 ">
-          <p className="w-[350px]">
+          <p className="w-[350px] font-semibold">
             {Object.values(currentProfile).length === 0
               ? currUser.headline
               : currentProfile?.headline}
           </p>
 
           <div className="flex flex-col">
-            <p>
+            <p className="font-extrabold">
               {Object.values(currentProfile).length === 0
                 ? currUser.company
                 : currentProfile?.company}
             </p>
-            <p>
+            <p className="font-extrabold">
               {Object.values(currentProfile).length === 0
                 ? currUser.college
                 : currentProfile?.college}
             </p>
           </div>
         </div>
-        <p>
+        <p className="py-5 font-semibold">
           {Object.values(currentProfile).length === 0
             ? currUser.location
             : currentProfile?.location}

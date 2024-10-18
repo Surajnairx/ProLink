@@ -120,7 +120,7 @@ const LikeButtonComponent = ({ currUser, postID }) => {
               {postComments.length > 0 ? (
                 postComments.map((comment) => {
                   return (
-                    <div className="flex flex-col bg-black m-3 p-2 text-white">
+                    <div className="w-fullflex flex-col bg-black p-3 rounded-md text-white">
                       {console.log(comment)}
                       <div className="flex justify-between items-baseline">
                         <p className="text-lg font-bold">{comment.userName}</p>
