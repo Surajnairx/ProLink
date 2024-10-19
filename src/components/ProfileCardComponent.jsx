@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import PostCardComponent from "./PostCardComponent";
 import { getPost, getSingleUser, getSingleStatus } from "../api/FirestoreAPI";
 import { imageUpload } from "../api/ImageUploadAPI";
@@ -11,6 +11,7 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
   const [allPost, setAllPosts] = useState([]);
   const [currentProfile, setCurrentProfile] = useState({});
   const [currentImage, setCurrentImage] = useState({});
+  const [imageLink, setImageLink] = useState("");
 
   let location = useLocation();
   const getImage = (event) => {
@@ -18,7 +19,7 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
   };
 
   const uploadImage = () => {
-    imageUpload(currentImage);
+    imageUpload(currentImage, currUser.userID);
   };
 
   useMemo(() => {
@@ -32,10 +33,20 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
     getPost(setAllPosts);
   }, []);
 
+  useEffect(() => {}, [imageLink]);
+
+  console.log(currUser);
+
   return (
     <>
-      <div className="w-auto h-auto bg-neutral-100 m-8 rounded-md p-3">
+      <div className="bg-neutral-100 m-8 rounded-md p-3">
+        <img
+          className="object-cover object-center rounded-full p-3 m-3 ring-2 h-64 w-64 ring-gray-300 dark:ring-gray-500"
+          src={currUser.imageLink}
+          alt=""
+        />
         <input type="file" onChange={getImage} />
+        img
         <button onClick={uploadImage}>Upload</button>
         <div className=" w-auto h-auto  absolute right-14  p2">
           <HiOutlinePencil
