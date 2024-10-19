@@ -62,7 +62,7 @@ export const editProfile = (userID, data) => {
   let userToEdit = doc(userRef, userID);
   updateDoc(userToEdit, data)
     .then(() => {
-      toast.success("Profile Updates Successfully");
+      toast.success("Profile Updated Successfully");
     })
     .catch((err) => {
       console.log(err);
@@ -146,6 +146,36 @@ export const getCommentsByUser = (postID, setPostComments) => {
       });
       setPostComments(comments);
     });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getAllUsers = (setAllUsers) => {
+  onSnapshot(userRef, (res) => {
+    setAllUsers(
+      res.docs.map((docs) => {
+        return { ...docs.data(), id: docs.id };
+      })
+    );
+  });
+};
+
+export const updatePost = (id, post) => {
+  let docToUpdate = doc(dbRef, id);
+  try {
+    updateDoc(docToUpdate, { post });
+    toast.success("Post has been updated");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const deletePost = (id) => {
+  let docToDelete = doc(dbRef, id);
+  try {
+    deleteDoc(docToDelete);
+    toast.success("Post succesfully deleted");
   } catch (err) {
     console.log(err);
   }

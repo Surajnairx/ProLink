@@ -1,17 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import PostCardComponent from "./PostCardComponent";
 import { getPost, getSingleUser, getSingleStatus } from "../api/FirestoreAPI";
 import { imageUpload } from "../api/ImageUploadAPI";
 import { useLocation } from "react-router-dom";
+import FileUploadModal from "./FileUploadModal";
 import { HiOutlinePencil } from "react-icons/hi";
 
 const ProfileCardComponent = ({ currUser, onEdit }) => {
   const [allPost, setAllPosts] = useState([]);
   const [currentProfile, setCurrentProfile] = useState({});
   const [currentImage, setCurrentImage] = useState({});
-  const [imageLink, setImageLink] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   let location = useLocation();
   const getImage = (event) => {
@@ -19,7 +21,13 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
   };
 
   const uploadImage = () => {
-    imageUpload(currentImage, currUser.userID);
+    imageUpload(
+      currentImage,
+      currUser.userID,
+      setModalOpen,
+      setProgress,
+      setCurrentImage
+    );
   };
 
   useMemo(() => {
@@ -33,21 +41,33 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
     getPost(setAllPosts);
   }, []);
 
-  useEffect(() => {}, [imageLink]);
-
-  console.log(currUser);
-
   return (
     <>
+      {modalOpen ? (
+        <FileUploadModal
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+          getImage={getImage}
+          uploadImage={uploadImage}
+          currentImage={currentImage}
+          progress={progress}
+        />
+      ) : (
+        <></>
+      )}
+
       <div className="bg-neutral-100 m-8 rounded-md p-3">
         <img
           className="object-cover object-center rounded-full p-3 m-3 ring-2 h-64 w-64 ring-gray-300 dark:ring-gray-500"
-          src={currUser.imageLink}
+          src={
+            Object.values(currentProfile).length === 0
+              ? currUser.imageLink
+              : currentProfile?.imageLink
+          }
+          onClick={() => setModalOpen(true)}
           alt=""
         />
-        <input type="file" onChange={getImage} />
-        img
-        <button onClick={uploadImage}>Upload</button>
+
         <div className=" w-auto h-auto  absolute right-14  p2">
           <HiOutlinePencil
             className=" text-4xl p-1 cursor-pointer hover:bg-slate-200 rounded-xl"
