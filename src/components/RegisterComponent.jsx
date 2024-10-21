@@ -5,7 +5,6 @@ import Logo from "../assets/Logo.png";
 import { postUserData } from "../api/FirestoreAPI";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import uuid from "react-uuid";
 
 const RegisterComponent = () => {
   const [credentails, setCredentials] = useState({});
@@ -16,11 +15,11 @@ const RegisterComponent = () => {
       let res = await RegisterAPI(credentails.email, credentails.password);
       navigate("/home");
       postUserData({
-        userID: uuid(),
         name: credentails.name,
         email: credentails.email,
       });
       toast.success("Account Created Successfully");
+      toast.success("Signed in Successfully");
       localStorage.setItem("user-email", res.user.email);
     } catch (err) {
       toast.error("Email Already Registered");

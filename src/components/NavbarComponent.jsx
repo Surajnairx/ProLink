@@ -3,18 +3,21 @@ import { useState } from "react";
 import Logo from "../assets/HomeLogo.png";
 import User from "../assets/profile1.png";
 import ProfilePopup from "./ProfilePopup";
+import SearchUsers from "./SearchUsers";
 import {
   AiOutlineHome,
   AiOutlineSearch,
-  AiOutlineUser,
+  AiOutlineUserAdd,
   AiOutlineMessage,
   AiOutlineBell,
 } from "react-icons/ai";
 import { BsBriefcase } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+// import { useStyleRegister } from "antd/es/theme/internal";
 
 const NavbarComponent = ({ currUser }) => {
   const [popupVisible, setPopupVisible] = useState(false);
+  const [isSearch, setIsSearch] = useState(false);
 
   const displayPopup = () => {
     setPopupVisible(!popupVisible);
@@ -34,43 +37,67 @@ const NavbarComponent = ({ currUser }) => {
           alt=""
           onClick={() => goToPage("/home")}
         />
-        <input
+        {isSearch ? <SearchUsers></SearchUsers> : <></>}
+        {/* <input
           type="text"
           name="search"
           placeholder="Search"
           className="bg-slate-200 px-5 py-1 rounded-sm"
+        /> */}
+        <AiOutlineSearch
+          className=" cursor-pointer"
+          size={40}
+          onClick={() => setIsSearch(true)}
         />
-        <AiOutlineSearch className=" cursor-pointer" size={40} />
       </div>
       <div className="flex items-center gap-10">
-        <AiOutlineHome
-          size={40}
-          className="w-[55%] cursor-pointer"
-          onClick={() => goToPage("/home")}
-        />
-        <AiOutlineUser
-          size={40}
-          className="w-[55%] cursor-pointer"
-          onClick={() => goToPage("/profile")}
-        />
-        <BsBriefcase
-          size={40}
-          className="w-[55%]  cursor-pointer"
-          onClick={() => goToPage("/jobs")}
-        />
-        <AiOutlineMessage size={40} className="w-[55%]  cursor-pointer" />
-        <AiOutlineBell size={40} className="w-[55%]  cursor-pointer" />
+        <div className="flex flex-col items-center">
+          {" "}
+          <AiOutlineHome
+            size={40}
+            className="w-[80px] cursor-pointer"
+            onClick={() => goToPage("/home")}
+          />
+          Home
+        </div>
+        <div className="flex flex-col justify-center items-center">
+          {" "}
+          <AiOutlineUserAdd
+            size={40}
+            className="w-[80px] cursor-pointer"
+            onClick={() => goToPage("/connections")}
+          />
+          Network
+        </div>
+        <div className="flex flex-col items-center">
+          <BsBriefcase
+            size={40}
+            className="w-[80px]  cursor-pointer"
+            onClick={() => goToPage("/jobs")}
+          />
+          Jobs
+        </div>
+        <div className="flex flex-col items-center">
+          <AiOutlineMessage size={40} className="w-[80px]  cursor-pointer" />
+          Messaging
+        </div>
+        <div className="flex flex-col items-center">
+          {" "}
+          <AiOutlineBell size={40} className="w-[80px]  cursor-pointer" />
+          Notification
+        </div>
       </div>
       <div className="flex flex-col items-center">
         <button>
           <img
-            className="w-[55px] rounded-lg  cursor-pointer "
+            className="w-[45px] rounded-lg  cursor-pointer "
             src={User}
             onClick={displayPopup}
           />
+          <p>Me ⬇️</p>
         </button>
         {popupVisible ? (
-          <div className="absolute top-16 z-[100]">
+          <div className="absolute top-16 right-5 z-[100]">
             <ProfilePopup currUser={currUser} />
           </div>
         ) : (

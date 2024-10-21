@@ -1,25 +1,35 @@
 /* eslint-disable react/prop-types */
 import LikeButtonComponent from "./LikeButtonComponent";
 import { useNavigate } from "react-router-dom";
-import { getCurrentuser, deletePost } from "../api/FirestoreAPI";
+import {
+  getCurrentuser,
+  deletePost,
+  getConnections,
+} from "../api/FirestoreAPI";
 import { getAllUsers } from "../api/FirestoreAPI";
 import { BsPencil, BsTrash } from "react-icons/bs";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 
 const PostCardComponent = ({ post, getEditData }) => {
   let navigate = useNavigate();
   const [currUser, setCurrUser] = useState({});
   const [allUsers, setAllUsers] = useState([]);
+  const [isConnected, setIsConnected] = useState(false);
 
   useMemo(() => {
     getCurrentuser(setCurrUser);
     getAllUsers(setAllUsers);
   }, []);
 
-  return (
-    <div className=" w-2/3  min-h-fit  m-[20px]  bg-white rounded-lg flex flex-col">
+  useEffect(() => {
+    getConnections(currUser.userID, post.userID, setIsConnected);
+  }, [currUser.userID, post.userID]);
+  console.log(isConnected);
+
+  return isConnected ? (
+    <div className=" w-2/3 m-6  min-h-fit  bg-white rounded-lg flex flex-col">
       <div className="flex justify-between items-center">
-        <div className="flex m-3">
+        <div className="flex m-4">
           <img
             className="object-cover object-center rounded-full p-2 ring-2 h-24 w-24 ring-gray-300 dark:ring-gray-500"
             src={
@@ -38,7 +48,7 @@ const PostCardComponent = ({ post, getEditData }) => {
                 })
               }
             >
-              {post.userName}
+              {allUsers.filter((item) => item.userID === post.userID)[0]?.name}
             </p>
             <p className="text-sm font-normal text-gray-600 ">
               {allUsers
@@ -78,6 +88,8 @@ const PostCardComponent = ({ post, getEditData }) => {
         postID={post.postID}
       />
     </div>
+  ) : (
+    <></>
   );
 };
 

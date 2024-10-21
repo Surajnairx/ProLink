@@ -12,7 +12,7 @@ const ProfileEdit = ({ onEdit, currUser }) => {
   };
   const updateProfileData = () => {
     editProfile(currUser.userID, editInputs);
-    console.log(currUser.userID, editInputs);
+
     onEdit();
   };
 

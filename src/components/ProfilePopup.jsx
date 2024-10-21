@@ -7,9 +7,19 @@ const ProfilePopup = ({ currUser }) => {
   let navigate = useNavigate();
 
   return (
-    <div className="flex flex-col rounded-lg shadow-xl bg-slate-200 m-7 p-5 gap-3 z-[100] ">
-      <p className=" font-extrabold text-2xl mt-10">{currUser.name}</p>
-      <p className="text-gray-500">{currUser.headline}</p>
+    <div className="w-[400px] flex flex-col rounded-lg shadow-xl bg-slate-200 m-7 gap-2 p-5  z-[100] ">
+      <div className="flex items-center">
+        <img
+          className="object-cover object-center rounded-full p-3  ring-2 h-32 w-32 ring-gray-300 dark:ring-gray-500"
+          src={currUser.imageLink}
+          alt=""
+        />
+        <div className="p-2">
+          <p className=" font-extrabold ">{currUser.name}</p>
+          <p className=" text-sm text-gray-500">{currUser.headline}</p>
+        </div>
+      </div>
+
       <ButtonComponent
         title="View Profile"
         onClick={() =>
