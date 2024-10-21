@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "../assets/HomeLogo.png";
 import User from "../assets/profile1.png";
 import ProfilePopup from "./ProfilePopup";
@@ -13,11 +13,14 @@ import {
 } from "react-icons/ai";
 import { BsBriefcase } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-// import { useStyleRegister } from "antd/es/theme/internal";
+import { getAllUsers } from "../api/FirestoreAPI";
 
 const NavbarComponent = ({ currUser }) => {
   const [popupVisible, setPopupVisible] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [users, setUsers] = useState([]);
+  const [searchUser, setSearchUser] = useState([]);
 
   const displayPopup = () => {
     setPopupVisible(!popupVisible);
@@ -28,6 +31,39 @@ const NavbarComponent = ({ currUser }) => {
     navigate(route);
   };
 
+  const handleSearch = () => {
+    if (searchInput !== "") {
+      let searched = users.filter((user) => {
+        return Object.values(user)
+          .join("")
+          .toLowerCase()
+          .includes(searchInput.toLowerCase());
+      });
+      setSearchUser(searched);
+      console.log(searchUser);
+    } else {
+      setSearchUser(users);
+    }
+  };
+
+  const openUser = (user) => {
+    navigate("/profile", {
+      state: {
+        id: user.userID,
+        email: user.email,
+      },
+    });
+  };
+
+  useEffect(() => {
+    let debounced = setTimeout(() => {
+      handleSearch();
+    }, 1000);
+    return () => clearTimeout(debounced);
+  }, [searchInput]);
+
+  useEffect(() => getAllUsers(setUsers));
+
   return (
     <div className="w-full h-[70px] bg-slate-200 flex justify-around items-center">
       <div className="flex justify-center items-center gap-5">
@@ -37,22 +73,20 @@ const NavbarComponent = ({ currUser }) => {
           alt=""
           onClick={() => goToPage("/home")}
         />
-        {isSearch ? <SearchUsers></SearchUsers> : <></>}
-        {/* <input
-          type="text"
-          name="search"
-          placeholder="Search"
-          className="bg-slate-200 px-5 py-1 rounded-sm"
-        /> */}
-        <AiOutlineSearch
-          className=" cursor-pointer"
-          size={40}
-          onClick={() => setIsSearch(true)}
-        />
+        {isSearch ? <SearchUsers setSearchInput={setSearchInput} /> : <></>}
+
+        <div
+          className="flex justify-center items-center cursor-pointer"
+          onClick={() => {
+            setIsSearch(!isSearch), setSearchInput("");
+          }}
+        >
+          <AiOutlineSearch className=" cursor-pointer" size={40} />
+          Search
+        </div>
       </div>
       <div className="flex items-center gap-10">
         <div className="flex flex-col items-center">
-          {" "}
           <AiOutlineHome
             size={40}
             className="w-[80px] cursor-pointer"
@@ -104,6 +138,32 @@ const NavbarComponent = ({ currUser }) => {
           <></>
         )}
       </div>
+      {searchInput.length === 0 ? (
+        isSearch ? (
+          <div className=" absolute  w-72 h-auto rounded-md top-20 left-80 bg-slate-300 z-50 p-3">
+            No Results Found
+          </div>
+        ) : (
+          <></>
+        )
+      ) : (
+        <div className=" absolute flex flex-col gap-3 w-72 h-auto rounded-md top-20 left-80 bg-slate-300 z-50">
+          {searchUser.map((user) => (
+            <div
+              className="flex rounded-md hover:bg-slate-100 p-3"
+              key={user.id}
+              onClick={() => openUser(user)}
+            >
+              <img
+                className="object-cover object-center rounded-full p-1 ring-2 h-10 w-10 ring-gray-300 dark:ring-gray-500"
+                src={user.imageLink}
+                alt=""
+              />
+              <p className="p-2">{user.name}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
