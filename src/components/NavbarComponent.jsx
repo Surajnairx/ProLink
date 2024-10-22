@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import Logo from "../assets/HomeLogo.png";
@@ -62,7 +63,7 @@ const NavbarComponent = ({ currUser }) => {
     return () => clearTimeout(debounced);
   }, [searchInput]);
 
-  useEffect(() => getAllUsers(setUsers));
+  useEffect(() => getAllUsers(setUsers), []);
 
   return (
     <div className="w-full h-[70px] bg-slate-200 flex justify-around items-center">
@@ -112,7 +113,11 @@ const NavbarComponent = ({ currUser }) => {
           Jobs
         </div>
         <div className="flex flex-col items-center">
-          <AiOutlineMessage size={40} className="w-[80px]  cursor-pointer" />
+          <AiOutlineMessage
+            size={40}
+            className="w-[80px]  cursor-pointer"
+            onClick={() => goToPage("/messaging")}
+          />
           Messaging
         </div>
         <div className="flex flex-col items-center">

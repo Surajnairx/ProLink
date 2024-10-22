@@ -10,7 +10,7 @@ import {
 import { useMemo, useState } from "react";
 import moment from "moment";
 
-const LikeButtonComponent = ({ currUser, postID }) => {
+const LikeButtonComponent = ({ currUser, post }) => {
   const [likeCount, setLikesCount] = useState("");
   const [liked, setLiked] = useState(false);
   const [commentBox, setCommentBox] = useState(false);
@@ -23,7 +23,7 @@ const LikeButtonComponent = ({ currUser, postID }) => {
   };
 
   const handleLike = () => {
-    likePost(currUser.userID, postID, liked);
+    likePost(currUser, post.userID, post.postID, liked);
   };
   const getComment = (event) => {
     setComment(event.target.value);
@@ -34,7 +34,8 @@ const LikeButtonComponent = ({ currUser, postID }) => {
       postComment(
         currUser.name,
         currUser.headline,
-        postID,
+        currUser,
+        post.postID,
         comment,
         timeStamp()
       );
@@ -45,10 +46,10 @@ const LikeButtonComponent = ({ currUser, postID }) => {
   };
 
   useMemo(() => {
-    getLikesByUser(currUser.userID, postID, setLiked, setLikesCount);
-    getCommentsByUser(postID, setPostComments);
+    getLikesByUser(currUser.userID, post.postID, setLiked, setLikesCount);
+    getCommentsByUser(post.postID, setPostComments);
     // console.log(currUser);
-  }, [currUser.userID, postID]);
+  }, [currUser.userID, post.postID]);
 
   return (
     <div className=" p-3 flex flex-col ">

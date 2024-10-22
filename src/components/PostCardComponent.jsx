@@ -81,11 +81,7 @@ const PostCardComponent = ({ post, getEditData }) => {
       <pre className=" p-4 text-wrap font-poppins text-[14px] font-semibold text-black">
         {post.post}
       </pre>
-      <LikeButtonComponent
-        currUser={currUser}
-        // userID={currUser?.userID}
-        postID={post.postID}
-      />
+      <LikeButtonComponent currUser={currUser} post={post} />
     </div>
   ) : (
     <></>

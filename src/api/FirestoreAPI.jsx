@@ -11,13 +11,17 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import { getToken } from "firebase/messaging";
+import { message } from "../firebaseConfig";
 import { toast } from "react-toastify";
+import moment from "moment";
 
 let dbRef = collection(firestore, "posts");
 let userRef = collection(firestore, "users");
 let likeRef = collection(firestore, "likes");
 let commentsRef = collection(firestore, "comments");
 let connectionRef = collection(firestore, "connections");
+let notificationRef = collection(firestore, "notification");
 
 export const Post = (object) => {
   addDoc(dbRef, object)
@@ -92,13 +96,28 @@ export const getSingleUser = (setCurrentUser, email) => {
   });
 };
 
-export const likePost = (userID, postID, liked) => {
+export const likePost = (currUser, postUser, postID, liked) => {
+  let type = "like";
+  let userID = currUser.userID;
   try {
     let docLike = doc(likeRef, `${userID}_${postID}`);
+    let docToNotify = doc(notificationRef, `${currUser.userID}_${postID}`);
     if (liked) {
       deleteDoc(docLike);
+      deleteDoc(docToNotify);
     } else {
-      setDoc(docLike, { userID, postID });
+      setDoc(docLike, { userID, postUser, postID, type });
+      if (userID !== postUser) {
+        const notificationData = {
+          userID: currUser.userID,
+          username: currUser.name,
+          recipientUserID: postUser,
+          type: type,
+          isRead: false,
+          timeStamp: moment().format("MMMM Do YYYY, h:mm"),
+        };
+        setDoc(docToNotify, notificationData);
+      }
     }
   } catch (err) {
     console.log(err);
@@ -121,15 +140,37 @@ export const getLikesByUser = (userID, postID, setLiked, setLikesCount) => {
   }
 };
 
-export const postComment = (userName, headline, postID, comment, timeStamp) => {
+export const postComment = (
+  userName,
+  headline,
+  currUser,
+  postID,
+  comment,
+  timeStamp
+) => {
+  let type = "comment";
+  let userID = currUser.userID;
+  let docToNotify = doc(notificationRef, `${userID}_${postID}`);
   try {
     addDoc(commentsRef, {
       userName,
       headline,
+      type,
       postID,
       comment,
       timeStamp,
     });
+    if (userID !== postID) {
+      const notificationData = {
+        userID: currUser.userID,
+        username: currUser.name,
+        recipientUserID: postID,
+        type: type,
+        isRead: false,
+        timeStamp: moment().format("MMMM Do YYYY, h:mm"),
+      };
+      setDoc(docToNotify, notificationData);
+    }
   } catch (err) {
     console.log(err);
   }
@@ -209,5 +250,19 @@ export const getConnections = (userID, connectionID, setIsConnected) => {
     });
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const generateToken = async () => {
+  const permision = await Notification.requestPermission();
+  console.log(permision);
+  if (permision == "granted") {
+    console.log("Inside");
+
+    const token = await getToken(message, {
+      vapidKey:
+        "BPwkgNLeerYsa3XxHy76-6nry1lpeX7jJlFGCb2u3ZQVGuR_3f125UFJMaqGT7gtARUUB8VUJQ05cQADjt8Aivg",
+    });
+    console.log(token);
   }
 };

@@ -4,6 +4,7 @@ import Register from "../pages/Register";
 import Home from "../pages/Home";
 import Profile from "../pages/Profile";
 import Connections from "../pages/Connections";
+import Messaging from "../pages/Messaging";
 export const Router = createBrowserRouter([
   {
     path: "/",
@@ -24,5 +25,9 @@ export const Router = createBrowserRouter([
   {
     path: "/connections",
     element: <Connections />,
+  },
+  {
+    path: "/messaging",
+    element: <Messaging />,
   },
 ]);
