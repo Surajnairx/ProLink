@@ -36,6 +36,7 @@ const LikeButtonComponent = ({ currUser, post }) => {
         currUser.headline,
         currUser,
         post.postID,
+        post,
         comment,
         timeStamp()
       );

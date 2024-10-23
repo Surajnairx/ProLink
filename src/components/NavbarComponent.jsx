@@ -15,6 +15,7 @@ import {
 import { BsBriefcase } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { getAllUsers } from "../api/FirestoreAPI";
+import useFetchNotifications from "../hooks/useNotifications";
 
 const NavbarComponent = ({ currUser }) => {
   const [popupVisible, setPopupVisible] = useState(false);
@@ -22,6 +23,12 @@ const NavbarComponent = ({ currUser }) => {
   const [searchInput, setSearchInput] = useState("");
   const [users, setUsers] = useState([]);
   const [searchUser, setSearchUser] = useState([]);
+
+  let notification = useFetchNotifications(currUser).notifications;
+
+  let isRead = notification
+    ?.filter((item) => item.isRead === false)
+    .map((notif) => notif.isRead);
 
   const displayPopup = () => {
     setPopupVisible(!popupVisible);
@@ -122,8 +129,24 @@ const NavbarComponent = ({ currUser }) => {
         </div>
         <div className="flex flex-col items-center">
           {" "}
-          <AiOutlineBell size={40} className="w-[80px]  cursor-pointer" />
+          <AiOutlineBell
+            size={40}
+            className="w-[80px]  cursor-pointer"
+            // onClick={() => goToPage("/notification")}
+            onClick={() =>
+              navigate("/notification", {
+                state: {
+                  isRead: isRead.length,
+                },
+              })
+            }
+          />
           Notification
+          {isRead.length ? (
+            <div className=" absolute bg-red-500">{isRead.length}</div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <div className="flex flex-col items-center">

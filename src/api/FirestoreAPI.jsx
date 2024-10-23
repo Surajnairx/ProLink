@@ -11,8 +11,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { getToken } from "firebase/messaging";
-import { message } from "../firebaseConfig";
+
 import { toast } from "react-toastify";
 import moment from "moment";
 
@@ -101,7 +100,7 @@ export const likePost = (currUser, postUser, postID, liked) => {
   let userID = currUser.userID;
   try {
     let docLike = doc(likeRef, `${userID}_${postID}`);
-    let docToNotify = doc(notificationRef, `${currUser.userID}_${postID}`);
+    let docToNotify = doc(notificationRef, `${currUser.userID}_like_${postID}`);
     if (liked) {
       deleteDoc(docLike);
       deleteDoc(docToNotify);
@@ -145,12 +144,14 @@ export const postComment = (
   headline,
   currUser,
   postID,
+  post,
   comment,
   timeStamp
 ) => {
   let type = "comment";
   let userID = currUser.userID;
-  let docToNotify = doc(notificationRef, `${userID}_${postID}`);
+  let recipientUserID = post.userID;
+  let docToNotify = doc(notificationRef, `${userID}_comment_${postID}`);
   try {
     addDoc(commentsRef, {
       userName,
@@ -164,7 +165,7 @@ export const postComment = (
       const notificationData = {
         userID: currUser.userID,
         username: currUser.name,
-        recipientUserID: postID,
+        recipientUserID: recipientUserID,
         type: type,
         isRead: false,
         timeStamp: moment().format("MMMM Do YYYY, h:mm"),
@@ -253,16 +254,35 @@ export const getConnections = (userID, connectionID, setIsConnected) => {
   }
 };
 
-export const generateToken = async () => {
-  const permision = await Notification.requestPermission();
-  console.log(permision);
-  if (permision == "granted") {
-    console.log("Inside");
+export const getNotification = async (userID, setNotification) => {
+  onSnapshot(notificationRef, (res) => {
+    setNotification(
+      res.docs
+        .map((doc) => {
+          return { ...doc.data(), id: doc.id };
+        })
+        .filter((doc) => doc.recipientUserID === userID)
+    );
+  });
+};
 
-    const token = await getToken(message, {
-      vapidKey:
-        "BPwkgNLeerYsa3XxHy76-6nry1lpeX7jJlFGCb2u3ZQVGuR_3f125UFJMaqGT7gtARUUB8VUJQ05cQADjt8Aivg",
+export const getUserByID = async (id, setCurrentProfile) => {
+  try {
+    onSnapshot(userRef, (res) => {
+      setCurrentProfile(
+        res.docs
+          .map((doc) => {
+            return { ...doc.data(), id: doc.id };
+          })
+          .filter((doc) => doc.userID === id)
+      );
     });
-    console.log(token);
+  } catch (err) {
+    console.log(err);
   }
+};
+
+export const readNotification = async (id) => {
+  let docToUpdate = doc(notificationRef, id);
+  updateDoc(docToUpdate, { isRead: true });
 };
