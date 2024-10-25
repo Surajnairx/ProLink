@@ -7,18 +7,20 @@ import moment from "moment";
 import uuid from "react-uuid";
 
 const PostComponent = ({ currUser }) => {
-  const timeStamp = () => {
-    return moment().format("MMMM Do YYYY, h:mm");
-  };
-  const getUniqueID = () => {
-    let id = uuid();
-    return id;
-  };
   const [modalOpen, setModalOpen] = useState(false);
   const [status, setStatus] = useState("");
   const [allPost, setAllPosts] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [currentPost, setCurrentPost] = useState({});
+
+  const getUniqueID = () => {
+    let id = uuid();
+    return id;
+  };
+
+  const timeStamp = () => {
+    return moment().format("MMMM Do YYYY, h:mm");
+  };
 
   const handleStatus = async () => {
     let object = {

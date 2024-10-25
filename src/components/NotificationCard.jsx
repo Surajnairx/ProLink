@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { getUserByID, readNotification } from "../api/FirestoreAPI";
