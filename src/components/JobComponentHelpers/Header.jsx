@@ -1,9 +1,20 @@
+import { useState } from "react";
+import NewJobModal from "./NewJobModal";
+
 const Header = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <>
       <div className="bg-black text-white  p-5 py-16 flex justify-around items-center ">
         <h1 className="text-2xl p-2">Open Job Listing</h1>
-        <button className="p-3 border-2 bg-teal-400 text-black border-black rounded-md ">
+        <button
+          className="p-3 border-2 bg-teal-400 text-black border-black rounded-md "
+          onClick={showModal}
+        >
           Post a Job
         </button>
       </div>
@@ -27,6 +38,7 @@ const Header = () => {
           Search
         </button>
       </div>
+      <NewJobModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </>
   );
 };

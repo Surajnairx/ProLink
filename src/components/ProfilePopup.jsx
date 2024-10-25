@@ -8,9 +8,9 @@ const ProfilePopup = ({ currUser }) => {
 
   return (
     <div className="w-[400px] flex flex-col rounded-lg shadow-xl bg-slate-200 m-7 gap-2 p-5  z-[100] ">
-      <div className="flex items-center">
+      <div className="flex flex-col items-center ">
         <img
-          className="object-cover object-center rounded-full p-3  ring-2 h-32 w-32 ring-gray-300 dark:ring-gray-500"
+          className="object-cover object-center rounded-full p-3 m-3 ring-2 h-44 w-44 ring-gray-400 dark:ring-gray-400"
           src={currUser.imageLink}
           alt=""
         />

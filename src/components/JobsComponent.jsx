@@ -3,9 +3,11 @@ import Navbar from "./NavbarComponent";
 import { getCurrentuser } from "../api/FirestoreAPI";
 import Header from "./JobComponentHelpers/Header";
 import JobCardComponent from "./JobComponentHelpers/JobCardComponent";
+import dummyData from "./JobComponentHelpers/dummyData";
 
 const JobsComponent = () => {
   const [currUser, setCurrUser] = useState({});
+
   useMemo(() => {
     getCurrentuser(setCurrUser);
   }, []);
@@ -13,7 +15,9 @@ const JobsComponent = () => {
     <>
       <Navbar currUser={currUser} />
       <Header />
-      <JobCardComponent />
+      {dummyData.map((data) => (
+        <JobCardComponent key={data.id} {...data} />
+      ))}
     </>
   );
 };

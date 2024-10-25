@@ -21,6 +21,7 @@ let likeRef = collection(firestore, "likes");
 let commentsRef = collection(firestore, "comments");
 let connectionRef = collection(firestore, "connections");
 let notificationRef = collection(firestore, "notification");
+let jobRef = collection(firestore, "jobs");
 
 export const Post = (object) => {
   addDoc(dbRef, object)
@@ -285,4 +286,12 @@ export const getUserByID = async (id, setCurrentProfile) => {
 export const readNotification = async (id) => {
   let docToUpdate = doc(notificationRef, id);
   updateDoc(docToUpdate, { isRead: true });
+};
+
+export const jobPost = (object) => {
+  addDoc(jobRef, object)
+    .then(() => {
+      toast.success(" Job Post has been added successfully");
+    })
+    .catch(() => toast.error("Document could not be added"));
 };

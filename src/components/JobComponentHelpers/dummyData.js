@@ -2,12 +2,12 @@ export default [
   {
     id: 1,
     postedOn: new Date(),
-    title: "FrontEnd Developer",
+    title: "BackEnd Developer",
     type: "Full Time",
     location: "Remote",
     companyName: "Google",
     companyURL: "Google.com",
-    skills: ["JS", "React.js", "Node.js"],
+    skills: ["JavaScript", "React.js", "Node.js"],
     link: "https://google.com/careers",
   },
   {
@@ -18,7 +18,7 @@ export default [
     location: "Remote",
     companyName: "Google",
     companyURL: "Google.com",
-    skills: ["JS", "React.js", "Node.js"],
+    skills: ["JavaScript", "React.js", "Node.js"],
     link: "https://google.com/careers",
   },
   {
@@ -29,7 +29,7 @@ export default [
     location: "Remote",
     companyName: "Google",
     companyURL: "Google.com",
-    skills: ["JS", "React.js", "Node.js"],
+    skills: ["JavaScript", "React.js", "Node.js"],
     link: "https://google.com/careers",
   },
 ];
