@@ -288,10 +288,22 @@ export const readNotification = async (id) => {
   updateDoc(docToUpdate, { isRead: true });
 };
 
-export const jobPost = (object) => {
-  addDoc(jobRef, object)
+export const postJob = async (object) => {
+  let time = moment().format("MMMM Do YYYY, h:mm");
+  let data = { ...object, time: time };
+  addDoc(jobRef, data)
     .then(() => {
       toast.success(" Job Post has been added successfully");
     })
     .catch(() => toast.error("Document could not be added"));
+};
+
+export const getJob = (setJob) => {
+  onSnapshot(jobRef, (response) => {
+    setJob(
+      response.docs.map((docs) => {
+        return { ...docs.data(), id: docs.id };
+      })
+    );
+  });
 };
