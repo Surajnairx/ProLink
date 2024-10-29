@@ -289,7 +289,7 @@ export const readNotification = async (id) => {
 };
 
 export const postJob = async (object) => {
-  let time = moment().format("MMMM Do YYYY, h:mm");
+  let time = moment().format("MMMM Do YYYY");
   let data = { ...object, time: time };
   addDoc(jobRef, data)
     .then(() => {
@@ -298,7 +298,7 @@ export const postJob = async (object) => {
     .catch(() => toast.error("Document could not be added"));
 };
 
-export const getJob = (setJob) => {
+export const getJob = async (setJob) => {
   onSnapshot(jobRef, (response) => {
     setJob(
       response.docs.map((docs) => {
@@ -306,4 +306,44 @@ export const getJob = (setJob) => {
       })
     );
   });
+};
+
+export const searchJobs = (search, setJobs) => {
+  console.log(search.jobType, search.locationType);
+
+  try {
+    let jobQuery = query(
+      jobRef,
+      where("jobType", "==", search.jobType),
+      where("locationType", "==", search.locationType)
+    );
+    onSnapshot(jobQuery, (res) => {
+      const jobs = res.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setJobs(jobs);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+  // try {
+  //   onSnapshot(userRef, (res) => {
+  //     console.log(
+  //       res.docs
+  //         .map((doc) => {
+  //           return { ...doc.data(), id: doc.id };
+  //         })
+  //         .filter(
+  //           (doc) =>
+  //             doc.jobType === search.jobType &&
+  //             doc.locationType === search.locationType
+  //         )
+  //     );
+  //   });
+  // } catch (err) {
+  //   console.log(err);
+  // }
 };

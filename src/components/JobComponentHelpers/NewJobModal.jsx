@@ -72,7 +72,6 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
           skills: oldState.skills.concat(skill),
         }));
   };
-  console.log(jobInputs);
 
   return (
     <>
@@ -124,7 +123,7 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
             required
           >
             <option value="">Select Job Type * </option>
-            <option value="Full time">Full Time</option>
+            <option value="Full time">Full time</option>
             <option value="Part time">Part time</option>
             <option value="Contract">Contract</option>
           </select>
