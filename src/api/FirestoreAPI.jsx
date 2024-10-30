@@ -22,6 +22,7 @@ let commentsRef = collection(firestore, "comments");
 let connectionRef = collection(firestore, "connections");
 let notificationRef = collection(firestore, "notification");
 let jobRef = collection(firestore, "jobs");
+let messageRef = collection(firestore, "messages");
 
 export const Post = (object) => {
   addDoc(dbRef, object)
