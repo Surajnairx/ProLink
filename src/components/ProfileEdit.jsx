@@ -4,18 +4,7 @@ import { editProfile } from "../api/FirestoreAPI";
 import { AiOutlineClose } from "react-icons/ai";
 
 const ProfileEdit = ({ onEdit, currUser }) => {
-  const [editInputs, setEditInputs] = useState({
-    name: "",
-    headline: "",
-    position: "",
-    company: "",
-    industry: "",
-    college: "",
-    location: "",
-    website: "",
-    about: "",
-    skills: "",
-  });
+  const [editInputs, setEditInputs] = useState(currUser);
   const getInput = (event) => {
     let { name, value } = event.target;
     let input = { [name]: value };

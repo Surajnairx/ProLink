@@ -10,6 +10,7 @@ import {
   deleteDoc,
   query,
   where,
+  serverTimestamp,
 } from "firebase/firestore";
 
 import { toast } from "react-toastify";
@@ -22,7 +23,8 @@ let commentsRef = collection(firestore, "comments");
 let connectionRef = collection(firestore, "connections");
 let notificationRef = collection(firestore, "notification");
 let jobRef = collection(firestore, "jobs");
-let messageRef = collection(firestore, "messages");
+let userChatsRef = collection(firestore, "userChats");
+let chatsRef = collection(firestore, "chats");
 
 export const Post = (object) => {
   addDoc(dbRef, object)
@@ -64,15 +66,17 @@ export const getCurrentuser = (setCurrUser) => {
   });
 };
 
-export const editProfile = (userID, data) => {
+export const editProfile = async (userID, data) => {
+  let object = { ...data, userID: userID };
   let userToEdit = doc(userRef, userID);
-  updateDoc(userToEdit, data)
+  updateDoc(userToEdit, object)
     .then(() => {
       toast.success("Profile Updated Successfully");
     })
     .catch((err) => {
       console.log(err);
     });
+  await setDoc(doc(userChatsRef, userID), {});
 };
 
 export const getSingleStatus = (setAllStatus, id) => {
@@ -330,21 +334,67 @@ export const searchJobs = (search, setJobs) => {
   } catch (err) {
     console.log(err);
   }
-  // try {
-  //   onSnapshot(userRef, (res) => {
-  //     console.log(
-  //       res.docs
-  //         .map((doc) => {
-  //           return { ...doc.data(), id: doc.id };
-  //         })
-  //         .filter(
-  //           (doc) =>
-  //             doc.jobType === search.jobType &&
-  //             doc.locationType === search.locationType
-  //         )
-  //     );
-  //   });
-  // } catch (err) {
-  //   console.log(err);
-  // }
+};
+
+export const searchUsers = async (searchItem, setUser) => {
+  console.log(searchItem, setUser);
+
+  try {
+    let searchQuery = query(userRef, where("name", "==", searchItem));
+    await onSnapshot(searchQuery, (res) => {
+      const user = res.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      console.log(user);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const handleChats = async (currUserID, user) => {
+  let combinedID = `${currUserID}_${user.userID}`;
+  try {
+    let addChats = doc(chatsRef, combinedID);
+    onSnapshot(chatsRef, async (res) => {
+      let chat = res.docs
+        .map((doc) => {
+          return { ...doc.data(), id: doc.id };
+        })
+        .filter((doc) => doc.id === combinedID);
+
+      if (!chat.length) {
+        setDoc(addChats, { data: "Hello" });
+        let docToUpdate = doc(userChatsRef, currUserID);
+        console.log(docToUpdate);
+        console.log("Hello");
+
+        await updateDoc(docToUpdate, {
+          [combinedID + ".userInfo"]: {
+            currUserID: user.userID,
+            userName: user.name,
+            imageLink: user.imageLink,
+          },
+          [combinedID + ".date"]: serverTimestamp(),
+        });
+
+        // userChats:{
+        //   chatUserID:{
+        //     combinedID:{
+        //       userInfo{
+        //         dn,img,id
+        //       },
+        //       lastMessage:"",
+        //       date:"",
+        //     }
+        //   }
+        // }
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
