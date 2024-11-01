@@ -61,7 +61,7 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
           className="object-cover object-center rounded-full p-3 m-3 ring-2 h-64 w-64 ring-gray-300 dark:ring-gray-500"
           src={
             Object.values(currentProfile).length === 0
-              ? currUser.imageLink
+              ? currUser?.imageLink
               : currentProfile?.imageLink
           }
           onClick={() => setModalOpen(true)}
@@ -76,44 +76,44 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
         </div>
         <h3 className="text-black font-bold text-2xl">
           {Object.values(currentProfile).length === 0
-            ? currUser.name
+            ? currUser?.name
             : currentProfile?.name}
         </h3>
         <div className="flex justify-between mt-2 ">
           <p className="w-[350px] font-semibold">
             {Object.values(currentProfile).length === 0
-              ? currUser.headline
+              ? currUser?.headline
               : currentProfile?.headline}
           </p>
 
           <div className="flex flex-col">
             <p className="font-extrabold">
               {Object.values(currentProfile).length === 0
-                ? currUser.company
+                ? currUser?.company
                 : currentProfile?.company}
             </p>
             <p className="font-extrabold">
               {Object.values(currentProfile).length === 0
-                ? currUser.college
+                ? currUser?.college
                 : currentProfile?.college}
             </p>
           </div>
         </div>
         <p className="py-5 font-semibold">
           {Object.values(currentProfile).length === 0
-            ? currUser.location
+            ? currUser?.location
             : currentProfile?.location}
         </p>
         <a
           href={
             Object.values(currentProfile).length === 0
-              ? currUser.website
+              ? currUser?.website
               : currentProfile?.website
           }
           className=" underline text-blue-600 cursor-pointer font-medium"
         >
           {Object.values(currentProfile).length === 0
-            ? currUser.website
+            ? currUser?.website
             : currentProfile?.website}
         </a>
       </div>
@@ -121,13 +121,13 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
         <h1 className="font-bold text-xl mb-2">About</h1>
         <pre className="font-poppins text-pretty ">
           {Object.values(currentProfile).length === 0
-            ? currUser.about
+            ? currUser?.about
             : currentProfile?.about}
         </pre>
         <h1 className="font-bold text-xl mt-5"> 💎 Top Skill</h1>
         <p className="text-lg">
           {Object.values(currentProfile).length === 0
-            ? currUser.skills
+            ? currUser?.skills
             : currentProfile?.skills}
         </p>
       </div>
@@ -135,7 +135,7 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
         {Object.values(currentProfile).length === 0
           ? allPost
               .filter((item) => {
-                return item.userEmail === currUser.email;
+                return item?.userEmail === currUser?.email;
               })
               .map((post) => {
                 return <PostCardComponent key={post.id} post={post} />;

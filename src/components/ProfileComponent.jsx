@@ -17,6 +17,7 @@ const ProfileComponent = () => {
   return (
     <div>
       <Navbar currUser={currUser} />
+
       {edit ? (
         <ProfileEdit currUser={currUser} onEdit={onEdit} />
       ) : (

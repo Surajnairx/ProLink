@@ -23,7 +23,7 @@ const PostCardComponent = ({ post, getEditData }) => {
 
   useEffect(() => {
     getConnections(currUser.userID, post.userID, setIsConnected);
-  }, [currUser.userID, post.userID]);
+  }, [currUser?.userID, post.userID]);
 
   return isConnected ? (
     <div className=" w-2/3 m-6  min-h-fit  bg-white rounded-lg flex flex-col">

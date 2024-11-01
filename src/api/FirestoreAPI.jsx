@@ -54,8 +54,8 @@ export const getCurrentuser = (setCurrUser) => {
   onSnapshot(userRef, (res) => {
     setCurrUser(
       res.docs
-        .map((docs) => {
-          return { ...docs.data(), userID: docs.id };
+        .map((doc) => {
+          return { ...doc.data(), userID: doc.id };
         })
         .filter((item) => {
           return item.email === localStorage.getItem("user-email");

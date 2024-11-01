@@ -4,14 +4,25 @@ import { editProfile } from "../api/FirestoreAPI";
 import { AiOutlineClose } from "react-icons/ai";
 
 const ProfileEdit = ({ onEdit, currUser }) => {
-  const [editInputs, setEditInputs] = useState(currUser);
+  const [editInputs, setEditInputs] = useState({
+    name: "",
+    headline: "",
+    position: "",
+    company: "",
+    industry: "",
+    college: "",
+    location: "",
+    website: "",
+    about: "",
+    skills: "",
+  });
   const getInput = (event) => {
     let { name, value } = event.target;
     let input = { [name]: value };
     setEditInputs({ ...editInputs, ...input });
   };
   const updateProfileData = () => {
-    editProfile(currUser.userID, editInputs);
+    editProfile(currUser?.userID, editInputs);
     onEdit();
   };
 
@@ -31,7 +42,7 @@ const ProfileEdit = ({ onEdit, currUser }) => {
           className="p-1 text-cyan-50 rounded-md"
           type="name"
           name="name"
-          value={editInputs.name}
+          value={editInputs?.name}
           onChange={getInput}
         />
         <label htmlFor="headline" className="text-lg mt-3 ">
@@ -41,7 +52,7 @@ const ProfileEdit = ({ onEdit, currUser }) => {
           className=" text-cyan-50 rounded-md h-[55px]"
           name="headline"
           style={{ overflow: "hidden" }}
-          value={editInputs.headline}
+          value={editInputs?.headline}
           onChange={getInput}
         ></textarea>
 
@@ -52,7 +63,7 @@ const ProfileEdit = ({ onEdit, currUser }) => {
           className="p-1   text-cyan-50 rounded-md"
           type="name"
           name="position"
-          value={editInputs.position}
+          value={editInputs?.position}
           onChange={getInput}
         />
         <label htmlFor="company" className="text-lg mt-3">
@@ -62,7 +73,7 @@ const ProfileEdit = ({ onEdit, currUser }) => {
           className="p-1   text-cyan-50 rounded-md "
           type="name"
           name="company"
-          value={editInputs.company}
+          value={editInputs?.company}
           onChange={getInput}
         />
         <label htmlFor="industry" className="text-lg mt-3">
@@ -72,7 +83,7 @@ const ProfileEdit = ({ onEdit, currUser }) => {
           className="p-1   text-cyan-50 rounded-md"
           type="name"
           name="industry"
-          value={editInputs.industry}
+          value={editInputs?.industry}
           onChange={getInput}
         />
 
@@ -84,7 +95,7 @@ const ProfileEdit = ({ onEdit, currUser }) => {
           type="name"
           name="college"
           onChange={getInput}
-          value={editInputs.college}
+          value={editInputs?.college}
         />
         <label htmlFor="location" className="text-lg mt-3">
           Location
@@ -94,7 +105,7 @@ const ProfileEdit = ({ onEdit, currUser }) => {
           type="name"
           placeholder="City,Country/Region"
           name="location"
-          value={editInputs.location}
+          value={editInputs?.location}
           onChange={getInput}
         />
         <label htmlFor="college" className="text-lg mt-2">
@@ -105,7 +116,7 @@ const ProfileEdit = ({ onEdit, currUser }) => {
           type="text"
           name="website"
           onChange={getInput}
-          value={editInputs.website}
+          value={editInputs?.website}
         />
         <label htmlFor="headline" className="text-lg flex gap-2 mt-2">
           About <p className="font-light">(Pre-fromated text only)</p>
@@ -114,7 +125,7 @@ const ProfileEdit = ({ onEdit, currUser }) => {
           className=" text-cyan-50 rounded-md h-[55px]"
           name="about"
           style={{ overflow: "hidden" }}
-          value={editInputs.about}
+          value={editInputs?.about}
           onChange={getInput}
         ></textarea>
 
@@ -126,7 +137,7 @@ const ProfileEdit = ({ onEdit, currUser }) => {
           type="text"
           name="skills"
           onChange={getInput}
-          value={editInputs.skills}
+          value={editInputs?.skills}
         />
       </div>
 

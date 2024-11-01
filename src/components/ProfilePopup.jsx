@@ -11,12 +11,12 @@ const ProfilePopup = ({ currUser }) => {
       <div className="flex flex-col items-center ">
         <img
           className="object-cover object-center rounded-full p-3 m-3 ring-2 h-44 w-44 ring-gray-400 dark:ring-gray-400"
-          src={currUser.imageLink}
+          src={currUser?.imageLink}
           alt=""
         />
         <div className="p-2">
-          <p className=" font-extrabold ">{currUser.name}</p>
-          <p className=" text-sm text-gray-500">{currUser.headline}</p>
+          <p className=" font-extrabold ">{currUser?.name}</p>
+          <p className=" text-sm text-gray-500">{currUser?.headline}</p>
         </div>
       </div>
 

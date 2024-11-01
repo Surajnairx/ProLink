@@ -15,11 +15,9 @@ const MessagingComponent = () => {
   return (
     <div>
       <Navbar currUser={currUser} />
-      <div className=" h-screen p-5 ">
-        <div className=" h-5/6 bg-white flex gap-5 justify-around rounded-md ">
-          <SideBar currUser={currUser} allUsers={allUsers} />
-          <ChatDialogBox currUser={currUser} />
-        </div>
+      <div className=" h-[calc(100vh_-_70px)] p-5 bg-white flex  justify-around rounded-md">
+        <SideBar currUser={currUser} allUsers={allUsers} />
+        <ChatDialogBox currUser={currUser} />
       </div>
     </div>
   );
