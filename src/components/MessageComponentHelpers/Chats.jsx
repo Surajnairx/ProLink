@@ -1,23 +1,34 @@
 /* eslint-disable react/prop-types */
-const Chats = ({ allUsers }) => {
+import { useEffect, useState } from "react";
+import { getChats } from "../../api/FirestoreAPI";
+
+const Chats = ({ currUser }) => {
+  const [chats, setChats] = useState({});
+
+  useEffect(() => {
+    getChats(setChats, currUser.userID);
+  }, []);
+
   return (
     <div className="text-white">
-      {allUsers.map((user) => (
-        <div
-          className="flex gap-3 p-5 border-b-2 border-black hover:bg-slate-950"
-          key={user.userID}
-        >
-          <img
-            className="object-cover object-center rounded-full ring-2 h-10 w-10 ring-gray-400 dark:ring-gray-400"
-            src={user.imageLink}
-            alt="userImage"
-          />
-          <div>
-            <h1 className="text-md">{user.name}</h1>
-            <p className="text-sm font-thin">Hello World</p>
+      {chats ? console.log(chats) : console.log("help")}
+      {chats ? (
+        Object.entries(chats).map((chat) => (
+          <div className="flex rounded-md hover:bg-slate-100 p-3" key={chat[0]}>
+            <img
+              className="object-cover object-center rounded-full p-1 ring-2 h-12 w-12 ring-gray-300 dark:ring-gray-500"
+              src={chat[1].userInfo.imageLink}
+              alt=""
+            />
+            <div className="ml-2">
+              <h1 className="font-semibold">{chat[1].userInfo.userName}</h1>
+              <p className="font-thin">Hello</p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

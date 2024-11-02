@@ -49,7 +49,7 @@ const SideBar = ({ currUser, allUsers }) => {
           onChange={(e) => handleSearch(e)}
         />
       </div>
-      <Chats allUsers={allUsers} />
+      <Chats allUsers={allUsers} currUser={currUser} />
       {searchInput ? (
         <div className=" absolute flex flex-col gap-3 w-72 h-auto rounded-md top-48 bg-slate-300 z-50">
           {searchUser?.map((user) => (

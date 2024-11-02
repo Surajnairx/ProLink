@@ -398,3 +398,15 @@ export const handleChats = async (currUserID, user) => {
     console.log(err);
   }
 };
+
+export const getChats = async (setChats, currUserID) => {
+  onSnapshot(userChatsRef, async (res) => {
+    await setChats(
+      res.docs
+        .map((doc) => {
+          return { ...doc.data() };
+        })
+        .filter((doc) => doc.id === currUserID)[0]
+    );
+  });
+};
