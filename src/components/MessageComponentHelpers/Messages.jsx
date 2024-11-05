@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import Message from "./Message";
-const Messages = () => {
+const Messages = ({ message, currUser }) => {
   return (
     <div className="">
-      <Message />
+      <Message message={message} currUser={currUser} />
     </div>
   );
 };

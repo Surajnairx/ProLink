@@ -20,9 +20,6 @@ const ConnectionComponent = () => {
     getCurrentuser(setCurrUser);
     getAllUsers(setAllUsers);
   }, []);
-  {
-    console.log(currUser);
-  }
 
   return (
     <div className="flex flex-col">
