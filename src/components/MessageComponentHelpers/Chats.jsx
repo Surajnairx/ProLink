@@ -9,7 +9,7 @@ const Chats = ({ currUser }) => {
 
   useEffect(() => {
     getUserChats(setChats, currUser.userID);
-  }, []);
+  }, [currUser.userID]);
 
   const handleSelect = (e) => {
     dispatch({ type: "CHANGE_USER", payload: e });

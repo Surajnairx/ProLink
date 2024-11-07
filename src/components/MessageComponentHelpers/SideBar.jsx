@@ -10,18 +10,20 @@ const SideBar = ({ currUser, allUsers }) => {
   const handleSearch = (e) => {
     setSearchInput(e.target.value);
     let searched = allUsers.filter((user) => {
-      if (user.id !== currUser.id) {
+      if (user.userID !== currUser.userID) {
         return Object.values(user)
           .join("")
           .toLowerCase()
           .includes(searchInput.toLowerCase());
+      } else {
+        return;
       }
     });
     setSearchUser(searched);
   };
 
-  const handleSelect = async (user) => {
-    handleChats(currUser?.userID, user);
+  const handleSelect = (user) => {
+    handleChats(currUser, user);
     setSearchInput("");
   };
 

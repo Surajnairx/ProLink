@@ -13,6 +13,7 @@ import {
   serverTimestamp,
   arrayUnion,
   Timestamp,
+  getDoc,
 } from "firebase/firestore";
 
 import { toast } from "react-toastify";
@@ -358,48 +359,59 @@ export const searchUsers = async (searchItem, setUser) => {
   }
 };
 
-export const handleChats = async (currUserID, user) => {
-  let combinedID = `${currUserID}_${user.userID}`;
+export const handleChats = async (currUser, user) => {
+  let combinedID =
+    currUser.userID > user.userID
+      ? `${currUser.userID}_${user.userID}`
+      : `${user.userID}_${currUser.userID}`;
   try {
-    let addChats = doc(chatsRef, combinedID);
-    onSnapshot(chatsRef, async (res) => {
-      let chat = res?.docs
-        .map((doc) => {
-          return { ...doc.data(), id: doc.id };
-        })
-        .filter((doc) => doc.id === combinedID);
+    const chatDocRef = doc(chatsRef, combinedID);
+    const currUserChatDocRef = doc(userChatsRef, currUser.userID);
+    const otherUserChatDocRef = doc(userChatsRef, user.userID);
 
-      if (!chat.length) {
-        setDoc(addChats, { messages: [] });
-        let docToUpdate = doc(userChatsRef, currUserID);
+    const res = await getDoc(chatDocRef);
 
-        updateDoc(docToUpdate, {
-          [combinedID]: {
-            userInfo: {
-              currUserID: user.userID,
-              userName: user.name,
-              imageLink: user.imageLink,
-            },
-            date: serverTimestamp(),
+    if (!res.exists()) {
+      //create a chat in chats collections
+      await setDoc(doc(chatsRef, combinedID), { messages: [] });
+
+      //create a userChat ref
+      await updateDoc(currUserChatDocRef, {
+        [combinedID]: {
+          userInfo: {
+            currUserID: user.userID,
+            userName: user.name,
+            imageLink: user.imageLink,
           },
-        });
-      }
-    });
+          date: serverTimestamp(),
+        },
+      });
+
+      await updateDoc(otherUserChatDocRef, {
+        [combinedID]: {
+          userInfo: {
+            currUserID: currUser.userID,
+            userName: currUser.name,
+            imageLink: currUser.imageLink,
+          },
+          date: serverTimestamp(),
+        },
+      });
+    }
   } catch (err) {
     console.log(err);
   }
 };
 
 export const getUserChats = async (setChats, currUserID) => {
-  onSnapshot(userChatsRef, async (res) => {
-    await setChats(
-      res.docs
-        .map((doc) => {
-          return { ...doc.data() };
-        })
-        .filter((doc) => doc.id === currUserID)[1]
-    );
-  });
+  try {
+    const currUserChatDocRef = doc(userChatsRef, currUserID);
+    onSnapshot(currUserChatDocRef, (res) => {
+      setChats(res.data());
+    });
+  } catch (err) {
+    return;
+  }
 };
 
 export const getMessages = async (chatID, setMessages) => {
@@ -426,7 +438,7 @@ export const updateMessages = async (chatId, senderId, text, receiverId) => {
       }),
     });
   } catch (err) {
-    console.log(err);
+    return;
   }
   let docToUpdate2 = doc(userChatsRef, receiverId);
   try {

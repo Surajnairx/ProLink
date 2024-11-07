@@ -6,7 +6,9 @@ import { updateMessages } from "../../api/FirestoreAPI";
 const Input = ({ currUser, data }) => {
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
-
+  const handleKey = (e) => {
+    e.code === "Enter" && handleSend();
+  };
   const handleSend = () => {
     if (text || img) {
       updateMessages(data.chatId, currUser.userID, text);
@@ -23,6 +25,7 @@ const Input = ({ currUser, data }) => {
         placeholder="Type Something"
         onChange={(e) => setText(e.target.value)}
         value={text}
+        onKeyDown={handleKey}
       />
       <div className="flex justify-between items-center gap-2 mx-7 px-4 ">
         <IoMdAttach size={30} color="white" />
@@ -30,7 +33,7 @@ const Input = ({ currUser, data }) => {
           className=" hidden"
           type="file"
           id="file"
-          onChange={(e) => setImg(e.target.value[0])}
+          onChange={(e) => setImg(e.target.files[0])}
         />
         <button className="border-2 px-4 py-3 bg-teal-400" onClick={handleSend}>
           Send
