@@ -11,7 +11,7 @@ const Input = ({ currUser, data }) => {
   };
   const handleSend = () => {
     if (text || img) {
-      updateMessages(data.chatId, currUser.userID, text);
+      updateMessages(data.chatId, currUser.userID, data.user.currUserID, text);
     }
     setText("");
     setImg(null);

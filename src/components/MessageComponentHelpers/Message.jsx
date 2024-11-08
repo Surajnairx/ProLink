@@ -8,31 +8,31 @@ const Message = ({ message, currUser }) => {
   return (
     <div>
       {message?.senderId === currUser.userID ? (
-        <div className="flex flex-row-reverse items-baseline gap-4">
-          <div className="m-2">
+        <div className="flex flex-row-reverse items-baseline gap-4 p-4 ">
+          {/* <div className="m-2 flex">
             <img
-              className=" object-cover object-center w-14 h-14 rounded-full"
+              className=" flex-1 object-cover object-center w-14 h-14 rounded-full"
               src={currUser.imageLink}
               alt=""
             />
-          </div>
+          </div> */}
           <div>
-            <p className="border-2 p-3 rounded-e-lg rounded-bl-lg">
+            <p className="border-2 p-3 rounded-e-lg rounded-bl-lg max-w-96">
               {message?.text}
             </p>
           </div>
         </div>
       ) : (
-        <div className="flex items-baseline gap-4">
-          <div className="m-2">
+        <div className="flex items-baseline gap-4 p-4">
+          {/* <div className="m-2">
             <img
               className=" object-cover object-center w-14 h-14 rounded-full"
               src={data.user?.imageLink}
               alt=""
             />
-          </div>
+          </div> */}
           <div>
-            <p className="border-2 p-3 rounded-e-lg rounded-bl-lg">
+            <p className="border-2 p-3  rounded-e-lg rounded-bl-lg max-w-96">
               {message.text}
             </p>
           </div>

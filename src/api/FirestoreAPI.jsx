@@ -426,28 +426,40 @@ export const getMessages = async (chatID, setMessages) => {
   });
 };
 
-export const updateMessages = async (chatId, senderId, text, receiverId) => {
-  let docToUpdate1 = doc(chatsRef, chatId);
+export const updateMessages = async (chatId, senderId, receiverId, text) => {
   try {
+    let docToUpdate1 = doc(chatsRef, chatId);
     updateDoc(docToUpdate1, {
       messages: arrayUnion({
         id: getUniqueID(),
         text,
         senderId: senderId,
+        receiverId: receiverId,
         date: Timestamp.now(),
       }),
     });
   } catch (err) {
     return;
   }
-  let docToUpdate2 = doc(userChatsRef, receiverId);
+
   try {
+    let docToUpdate2 = doc(userChatsRef, receiverId);
     updateDoc(docToUpdate2, {
       [chatId + ".lastMessage"]: { text },
       [chatId + ".date"]: serverTimestamp(),
     });
   } catch (err) {
-    console.log(err);
+    return;
+  }
+
+  try {
+    let docToUpdate = doc(userChatsRef, senderId);
+    updateDoc(docToUpdate, {
+      [chatId + ".lastMessage"]: { text },
+      [chatId + ".date"]: serverTimestamp(),
+    });
+  } catch (err) {
+    return;
   }
 };
 
