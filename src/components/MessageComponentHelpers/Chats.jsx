@@ -9,6 +9,7 @@ const Chats = ({ currUser }) => {
 
   useEffect(() => {
     getUserChats(setChats, currUser.userID);
+    console.log(chats);
   }, [currUser.userID]);
 
   const handleSelect = (e) => {
@@ -28,7 +29,7 @@ const Chats = ({ currUser }) => {
             >
               <img
                 className="object-cover object-center rounded-full p-1 ring-2 h-12 w-12 ring-gray-300 dark:ring-gray-500"
-                src={chat[1].userInfo.imageLink}
+                src={chat[1].userInfo?.imageLink}
                 alt=""
               />
               <div className="ml-2">
@@ -36,7 +37,7 @@ const Chats = ({ currUser }) => {
                 <p className="font-extralight truncate max-w-96">
                   {chat[1].lastMessage?.text}
                 </p>
-                <p>{}</p>
+                <p></p>
               </div>
             </div>
           ))

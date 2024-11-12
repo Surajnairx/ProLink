@@ -1,20 +1,19 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { IoMdAttach } from "react-icons/io";
+
 import { updateMessages } from "../../api/FirestoreAPI";
 
 const Input = ({ currUser, data }) => {
   const [text, setText] = useState("");
-  const [img, setImg] = useState(null);
+
   const handleKey = (e) => {
     e.code === "Enter" && handleSend();
   };
+
   const handleSend = () => {
-    if (text || img) {
+    if (text != "")
       updateMessages(data.chatId, currUser.userID, data.user.currUserID, text);
-    }
     setText("");
-    setImg(null);
   };
 
   return (
@@ -28,13 +27,6 @@ const Input = ({ currUser, data }) => {
         onKeyDown={handleKey}
       />
       <div className="flex justify-between items-center gap-2 mx-7 px-4 ">
-        <IoMdAttach size={30} color="white" />
-        <input
-          className=" hidden"
-          type="file"
-          id="file"
-          onChange={(e) => setImg(e.target.files[0])}
-        />
         <button className="border-2 px-4 py-3 bg-teal-400" onClick={handleSend}>
           Send
         </button>

@@ -12,7 +12,6 @@ import {
   where,
   serverTimestamp,
   arrayUnion,
-  Timestamp,
   getDoc,
 } from "firebase/firestore";
 
@@ -410,7 +409,7 @@ export const getUserChats = async (setChats, currUserID) => {
       setChats(res.data());
     });
   } catch (err) {
-    return;
+    console.log(err);
   }
 };
 
@@ -427,39 +426,46 @@ export const getMessages = async (chatID, setMessages) => {
 };
 
 export const updateMessages = async (chatId, senderId, receiverId, text) => {
+  const timeStamp = () => {
+    return moment().format("MMMM Do YYYY, h:mm");
+  };
+
   try {
-    let docToUpdate1 = doc(chatsRef, chatId);
-    updateDoc(docToUpdate1, {
-      messages: arrayUnion({
-        id: getUniqueID(),
-        text,
-        senderId: senderId,
-        receiverId: receiverId,
-        date: Timestamp.now(),
-      }),
-    });
+    let docToUpdate = doc(chatsRef, chatId);
+
+    if (text !== "") {
+      updateDoc(docToUpdate, {
+        messages: arrayUnion({
+          id: getUniqueID(),
+          text,
+          senderId: senderId,
+          receiverId: receiverId,
+          date: timeStamp(),
+        }),
+      });
+    }
   } catch (err) {
-    return;
+    console.log(err);
   }
 
   try {
-    let docToUpdate2 = doc(userChatsRef, receiverId);
-    updateDoc(docToUpdate2, {
+    let docToUpdate = doc(userChatsRef, receiverId);
+    updateDoc(docToUpdate, {
       [chatId + ".lastMessage"]: { text },
-      [chatId + ".date"]: serverTimestamp(),
+      [chatId + ".date"]: timeStamp(),
     });
   } catch (err) {
-    return;
+    console.log(err);
   }
 
   try {
     let docToUpdate = doc(userChatsRef, senderId);
     updateDoc(docToUpdate, {
       [chatId + ".lastMessage"]: { text },
-      [chatId + ".date"]: serverTimestamp(),
+      [chatId + ".date"]: timeStamp(),
     });
   } catch (err) {
-    return;
+    console.log(err);
   }
 };
 
