@@ -2,11 +2,12 @@
 import LikeButtonComponent from "./LikeButtonComponent";
 import { useNavigate } from "react-router-dom";
 import {
+  getAllUsers,
   getCurrentuser,
   deletePost,
   getConnections,
-} from "../api/FirestoreAPI";
-import { getAllUsers } from "../api/FirestoreAPI";
+} from "../../api/FirestoreAPI";
+// import {} from "../api/FirestoreAPI";
 import { BsPencil, BsTrash } from "react-icons/bs";
 import { useMemo, useState, useEffect } from "react";
 

@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState, useMemo } from "react";
-import PostModalComponent from "./PostModalComponent";
+import PostModalComponent from "./PostComponentHelpers/PostModalComponent";
 import { Post, getPost, updatePost } from "../api/FirestoreAPI";
-import PostCardComponent from "./PostCardComponent";
+import PostCardComponent from "./PostComponentHelpers/PostCardComponent";
 import moment from "moment";
 import uuid from "react-uuid";
 

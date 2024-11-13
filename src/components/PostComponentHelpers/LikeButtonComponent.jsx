@@ -6,7 +6,7 @@ import {
   getLikesByUser,
   postComment,
   getCommentsByUser,
-} from "../api/FirestoreAPI";
+} from "../../api/FirestoreAPI";
 import { useMemo, useState } from "react";
 import moment from "moment";
 

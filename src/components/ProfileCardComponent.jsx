@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useState, useMemo } from "react";
-import PostCardComponent from "./PostCardComponent";
+import PostCardComponent from "./PostComponentHelpers/PostCardComponent";
 import { getPost, getSingleUser, getSingleStatus } from "../api/FirestoreAPI";
 import { imageUpload } from "../api/ImageUploadAPI";
 import { useLocation } from "react-router-dom";

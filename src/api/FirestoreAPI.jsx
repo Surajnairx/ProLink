@@ -80,6 +80,10 @@ export const editProfile = async (userID, data) => {
       console.log(err);
     });
   await setDoc(doc(userChatsRef, userID), {});
+
+  let connectionID = userID;
+  let addConnection = doc(connectionRef, `${userID}_${connectionID}`);
+  await setDoc(addConnection, { userID, connectionID });
 };
 
 export const getSingleStatus = (setAllStatus, id) => {
