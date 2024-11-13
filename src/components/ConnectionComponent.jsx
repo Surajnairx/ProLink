@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 import { useMemo, useState } from "react";
 import Navbar from "./NavbarComponent";
-import ConnnectedUsersComponent from "./ConnnectedUsersComponent";
+import ConnnectedUsersComponent from "./ConnectionComponentHelper/ConnnectedUsersComponent";
 import {
   getAllUsers,
   getCurrentuser,
@@ -38,14 +38,6 @@ const ConnectionComponent = () => {
           )
         )}
       </div>
-
-      {/* {allUsers.map((user) => {
-        <ConnnectedUsersComponent
-          currUser={currUser}
-          user={user}
-          connectUser={connectUser}
-        />;
-      })} */}
     </div>
   );
 };

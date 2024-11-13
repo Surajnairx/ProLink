@@ -241,7 +241,7 @@ export const addConnection = (userID, connectionID) => {
   try {
     let addConnection = doc(connectionRef, `${userID}_${connectionID}`);
     setDoc(addConnection, { userID, connectionID });
-    toast.success("Connection Requent Sent");
+    toast.success("Following User");
   } catch (err) {
     console.log(err);
   }

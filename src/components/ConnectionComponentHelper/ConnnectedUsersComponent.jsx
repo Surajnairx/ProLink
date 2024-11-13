@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { getConnections } from "../api/FirestoreAPI";
-import ButtonComponent from "./ButtonComponent";
+import { getConnections } from "../../api/FirestoreAPI";
+import ButtonComponent from "../ButtonComponent";
 
 const ConnnectedUsersComponent = ({ currUser, user, connectUser }) => {
   const [isConnected, setIsConnected] = useState(false);
@@ -11,8 +11,6 @@ const ConnnectedUsersComponent = ({ currUser, user, connectUser }) => {
   }, [currUser.userID, user.userID]);
 
   return isConnected ? (
-    <></>
-  ) : currUser.userID == user.userID ? (
     <> </>
   ) : (
     <div
@@ -29,7 +27,7 @@ const ConnnectedUsersComponent = ({ currUser, user, connectUser }) => {
       <p className="font-medium p-3">{user.location}</p>
       <div className="p-2 border-black flex items-center">
         <ButtonComponent
-          title={"Connect 🌐"}
+          title={"Follow 🌐"}
           onClick={() => connectUser(user.userID)}
         />
       </div>
