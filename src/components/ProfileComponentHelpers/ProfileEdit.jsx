@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { editProfile } from "../api/FirestoreAPI";
+import { editProfile } from "../../api/FirestoreAPI";
 import { AiOutlineClose } from "react-icons/ai";
 
 const ProfileEdit = ({ onEdit, currUser }) => {

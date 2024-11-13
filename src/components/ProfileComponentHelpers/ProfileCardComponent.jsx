@@ -1,9 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useState, useMemo } from "react";
-import PostCardComponent from "./PostComponentHelpers/PostCardComponent";
-import { getPost, getSingleUser, getSingleStatus } from "../api/FirestoreAPI";
-import { imageUpload } from "../api/ImageUploadAPI";
+import PostCardComponent from "../PostComponentHelpers/PostCardComponent";
+import {
+  getPost,
+  getSingleUser,
+  getSingleStatus,
+} from "../../api/FirestoreAPI";
+import { imageUpload } from "../../api/ImageUploadAPI";
 import { useLocation } from "react-router-dom";
 import FileUploadModal from "./FileUploadModal";
 import { HiOutlinePencil } from "react-icons/hi";
@@ -64,16 +68,40 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
               ? currUser?.imageLink
               : currentProfile?.imageLink
           }
-          onClick={() => setModalOpen(true)}
+          // onClick={() => setModalOpen(true)}
+          onClick={() =>
+            currUser.userID === currentProfile.userID ||
+            currentProfile.userID === undefined
+              ? setModalOpen(true)
+              : undefined
+          }
           alt=""
         />
+        {console.log(currUser.userID, currentProfile.userID)}
 
-        <div className=" w-auto h-auto  absolute right-14  p2">
-          <HiOutlinePencil
-            className=" text-4xl p-1 cursor-pointer hover:bg-slate-200 rounded-xl"
-            onClick={onEdit}
-          />
-        </div>
+        {currUser.userID === currentProfile.userID ||
+        currentProfile.userID === undefined ? (
+          <div className=" w-auto h-auto  absolute right-14  p2">
+            <HiOutlinePencil
+              className=" text-4xl p-1 cursor-pointer hover:bg-slate-200 rounded-xl"
+              onClick={onEdit}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
+
+        {/* { ? (
+          <div className=" w-auto h-auto  absolute right-14  p2">
+            <HiOutlinePencil
+              className=" text-4xl p-1 cursor-pointer hover:bg-slate-200 rounded-xl"
+              onClick={onEdit}
+            />
+          </div>
+        ) : (
+          <></>
+        )} */}
+
         <h3 className="text-black font-bold text-2xl">
           {Object.values(currentProfile).length === 0
             ? currUser?.name

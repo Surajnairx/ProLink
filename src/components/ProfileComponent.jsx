@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { getCurrentuser } from "../api/FirestoreAPI";
 import Navbar from "./NavbarComponent";
-import ProfileCardComponent from "./ProfileCardComponent";
-import ProfileEdit from "./ProfileEdit";
+import ProfileCardComponent from "./ProfileComponentHelpers/ProfileCardComponent";
+import ProfileEdit from "./ProfileComponentHelpers/ProfileEdit";
 
 const ProfileComponent = () => {
   const [edit, setEdit] = useState(false);
