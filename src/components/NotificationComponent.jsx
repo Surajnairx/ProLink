@@ -1,5 +1,5 @@
 import Navbar from "./NavbarComponent";
-import NotificationCard from "./NotificationCard";
+import NotificationCard from "./NotificationComponentHelper/NotificationCard";
 import { getCurrentuser } from "../api/FirestoreAPI";
 import { useMemo, useState } from "react";
 import useFetchNotifications from "../hooks/useNotifications";
@@ -24,8 +24,6 @@ const NotificationComponent = () => {
           <NotificationCard notification={notification} key={notification.id} />
         );
       })}
-
-      {/* <NotificationCard notifications={notifications} /> */}
     </div>
   );
 };

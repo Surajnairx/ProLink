@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-import { getUserByID, readNotification } from "../api/FirestoreAPI";
+import { getUserByID, readNotification } from "../../api/FirestoreAPI";
 
 const NotificationCard = ({ notification }) => {
   const [currentProfile, setCurrentProfile] = useState([]);
@@ -18,9 +18,9 @@ const NotificationCard = ({ notification }) => {
       {notification?.isRead ? (
         <></>
       ) : (
-        <div className="p-3">
+        <div className=" flex justify-center items-center p-3">
           <div
-            className="flex border-2 p-2 gap-2 "
+            className="flex border-2 p-5 gap-2 rounded-md"
             onClick={() => handleNotification(notification.id)}
           >
             <img
@@ -42,8 +42,6 @@ const NotificationCard = ({ notification }) => {
               <p>{notification.timeStamp}</p>
             </div>{" "}
           </div>
-
-          {/* <div>{notification}</div> */}
         </div>
       )}
     </>
