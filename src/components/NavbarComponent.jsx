@@ -54,6 +54,12 @@ const NavbarComponent = ({ currUser }) => {
     }
   };
 
+  const handleClickOutside = (event) => {
+    if (popupVisible && !event.target.closest(".popup")) {
+      setPopupVisible(false);
+    }
+  };
+
   const openUser = (user) => {
     navigate("/profile", {
       state: {
@@ -64,10 +70,14 @@ const NavbarComponent = ({ currUser }) => {
   };
 
   useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
     let debounced = setTimeout(() => {
       handleSearch();
     }, 1000);
-    return () => clearTimeout(debounced);
+    return () => {
+      clearTimeout(debounced),
+        document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, [searchInput]);
 
   useEffect(() => getAllUsers(setUsers), []);
@@ -159,7 +169,7 @@ const NavbarComponent = ({ currUser }) => {
           <p>Me ⬇️</p>
         </button>
         {popupVisible ? (
-          <div className="absolute top-16 right-5 z-[100]">
+          <div className=" popup absolute top-20 right-5 z-[100]   ">
             <ProfilePopup currUser={currUser} />
           </div>
         ) : (

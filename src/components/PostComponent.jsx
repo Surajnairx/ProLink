@@ -55,7 +55,7 @@ const PostComponent = ({ currUser }) => {
   return (
     <div className="flex flex-col gap-10  rounded-md items-center">
       {currUser?.imageLink ? (
-        <div className="bg-white w-2/3 h-1/3 mt-40  border rounded-md flex flex-col gap-7 justify-center items-center">
+        <div className="bg-white w-2/3 h-1/3 mt-20  border rounded-md flex flex-col gap-7 justify-center items-center">
           <img
             className=" -mt-16 object-cover object-center rounded-full p-3 ring-2 h-32 w-32 ring-gray-300 dark:ring-gray-500"
             src={currUser?.imageLink}

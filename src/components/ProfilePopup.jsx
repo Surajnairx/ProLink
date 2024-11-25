@@ -7,7 +7,7 @@ const ProfilePopup = ({ currUser }) => {
   let navigate = useNavigate();
 
   return (
-    <div className="w-[400px] flex flex-col rounded-lg shadow-xl bg-slate-200 m-7 gap-2 p-5  z-[100] ">
+    <div className="w-[400px] flex flex-col rounded-lg shadow-xl bg-slate-200 gap-2 p-5  z-[100] ">
       <div className="flex flex-col items-center ">
         <img
           className="object-cover object-center rounded-full p-3 m-3 ring-2 h-44 w-44 ring-gray-400 dark:ring-gray-400"
