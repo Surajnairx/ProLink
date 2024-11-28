@@ -14,7 +14,7 @@ const Message = ({ message, currUser }) => {
     <div ref={ref}>
       {message?.senderId === currUser.userID ? (
         <div className="flex flex-row-reverse items-baseline gap-4 p-4 ">
-          <div className="border-2 p-3 rounded-e-lg rounded-bl-lg max-w-96 ">
+          <div className="border-2 p-3 rounded-s-lg rounded-br-lg max-w-96 ">
             {message?.text}
             <p className="text-xs font-extralight text-right">{message.date}</p>
           </div>
