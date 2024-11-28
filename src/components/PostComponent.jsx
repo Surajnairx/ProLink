@@ -3,6 +3,7 @@ import { useState, useMemo } from "react";
 import PostModalComponent from "./PostComponentHelpers/PostModalComponent";
 import { Post, getPost, updatePost } from "../api/FirestoreAPI";
 import PostCardComponent from "./PostComponentHelpers/PostCardComponent";
+import { uploadPostImage } from "../api/ImageUploadAPI";
 import moment from "moment";
 import uuid from "react-uuid";
 
@@ -12,6 +13,7 @@ const PostComponent = ({ currUser }) => {
   const [allPost, setAllPosts] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [currentPost, setCurrentPost] = useState({});
+  const [postImage, setPostImage] = useState({});
 
   const getUniqueID = () => {
     let id = uuid();
@@ -30,6 +32,7 @@ const PostComponent = ({ currUser }) => {
       userName: await currUser.name,
       userID: await currUser.userID,
       postID: getUniqueID(),
+      postImage: postImage,
     };
 
     await Post(object);
@@ -44,7 +47,7 @@ const PostComponent = ({ currUser }) => {
     setIsEdit(true);
   };
   const updateStatus = () => {
-    updatePost(currentPost.id, status);
+    updatePost(currentPost.id, status, postImage);
     setModalOpen(false);
   };
 
@@ -94,6 +97,10 @@ const PostComponent = ({ currUser }) => {
         handleStatus={handleStatus}
         isEdit={isEdit}
         updateStatus={updateStatus}
+        uploadPostImage={uploadPostImage}
+        postImage={postImage}
+        setPostImage={setPostImage}
+        currentPost={currentPost}
       />
       <div className="w-full flex flex-col gap-10 items-center">
         {allPost.map((post) => {

@@ -217,10 +217,10 @@ export const getAllUsers = (setAllUsers) => {
   });
 };
 
-export const updatePost = (id, post) => {
+export const updatePost = (id, post, postImage) => {
   let docToUpdate = doc(dbRef, id);
   try {
-    updateDoc(docToUpdate, { post });
+    updateDoc(docToUpdate, { post, postImage });
     toast.success("Post has been updated");
   } catch (err) {
     console.log(err);
