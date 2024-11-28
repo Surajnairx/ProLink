@@ -2,12 +2,9 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import Logo from "../assets/HomeLogo.png";
-import User from "../assets/profile1.png";
 import ProfilePopup from "./ProfilePopup";
-import SearchUsers from "./SearchUsers";
 import {
   AiOutlineHome,
-  AiOutlineSearch,
   AiOutlineUserAdd,
   AiOutlineMessage,
   AiOutlineBell,
@@ -69,8 +66,8 @@ const NavbarComponent = ({ currUser }) => {
     });
   };
 
+  document.addEventListener("mousedown", handleClickOutside);
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
     let debounced = setTimeout(() => {
       handleSearch();
     }, 1000);
@@ -83,24 +80,36 @@ const NavbarComponent = ({ currUser }) => {
   useEffect(() => getAllUsers(setUsers), []);
 
   return (
-    <div className="w-full h-[70px] bg-slate-200 flex justify-around items-center">
-      <div className="flex justify-center items-center gap-5">
+    <div className="w-full h-[70px] bg-slate-200 flex justify-around items-center ">
+      <div className=" flex justify-center items-center gap-5">
         <img
           className="w-[66px] rounded-lg cursor-pointer"
           src={Logo}
           alt=""
           onClick={() => goToPage("/home")}
         />
-        {isSearch ? <SearchUsers setSearchInput={setSearchInput} /> : <></>}
 
-        <div
-          className="flex justify-center items-center cursor-pointer"
-          onClick={() => {
-            setIsSearch(!isSearch), setSearchInput("");
-          }}
-        >
-          <AiOutlineSearch className=" cursor-pointer" size={40} />
-          Search
+        <div className="flex items-center">
+          <input
+            // className="p-3 border-none rounded-md bg-slate-300"
+            className={`p-3 border-none rounded-md bg-slate-300 transition-all duration-300 ease-in-out ${
+              isSearch ? "w-[350px]" : "w-[200px]"
+            }`}
+            placeholder="Search Users..."
+            type="text"
+            onChange={(e) => setSearchInput(e.target.value)}
+            onClick={() => setIsSearch(!isSearch)}
+            value={searchInput}
+          />
+
+          <button
+            className={isSearch ? "text-xl p-2 w-1" : "hidden"}
+            onClick={() => {
+              setIsSearch(false), setSearchInput("");
+            }}
+          >
+            &#10006;
+          </button>
         </div>
       </div>
       <div className="flex items-center gap-10">
@@ -137,11 +146,11 @@ const NavbarComponent = ({ currUser }) => {
           />
           Messaging
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center relative">
           {" "}
           <AiOutlineBell
             size={40}
-            className="w-[80px]  cursor-pointer"
+            className="w-[80px]  cursor-pointer "
             // onClick={() => goToPage("/notification")}
             onClick={() =>
               navigate("/notification", {
@@ -153,20 +162,22 @@ const NavbarComponent = ({ currUser }) => {
           />
           Notification
           {isRead.length ? (
-            <div className=" absolute bg-red-500">{isRead.length}</div>
+            <div className="absolute  bg-red-500 top-0 right-0 rounded-full text-white text-xs px-2 py-1">
+              {isRead.length}
+            </div>
           ) : (
             <></>
           )}
         </div>
       </div>
-      <div className="flex flex-col items-center">
-        <button>
+      <div className="">
+        <button className="flex flex-col items-center">
           <img
-            className="w-[45px] rounded-lg  cursor-pointer "
-            src={User}
+            className="w-[45px] rounded-lg  cursor-pointer mt-2"
+            src={currUser.imageLink}
             onClick={displayPopup}
           />
-          <p>Me ⬇️</p>
+          <p>Me 🡇</p>
         </button>
         {popupVisible ? (
           <div className=" popup absolute top-20 right-5 z-[100]   ">

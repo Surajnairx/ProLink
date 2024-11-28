@@ -77,13 +77,13 @@ const PostComponent = ({ currUser }) => {
 
       <div className="bg-white w-2/3 h-[100px] border rounded-md flex justify-center items-center mt-5">
         <button
-          className="bg-white w-3/4 border-2  border-black p-3 text-start rounded-full text-slate-500 hover:bg-slate-200"
+          className="bg-white w-3/4 border-2  border-teal-400 p-3 text-center rounded-full text-black hover:bg-black hover:text-teal-400 hover:border-black"
           onClick={() => {
             setModalOpen(true);
             setIsEdit(false);
           }}
         >
-          Start a Post
+          Start a post...
         </button>
       </div>
       <PostModalComponent
