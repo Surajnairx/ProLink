@@ -82,6 +82,14 @@ const PostCardComponent = ({ post, getEditData }) => {
       <pre className=" p-4 text-wrap font-poppins text-[14px] font-semibold text-black">
         {post.post}
       </pre>
+      <div className=" m-auto p-3">
+        {post.postImage ? (
+          <img className="w-full   shadow-lg" src={post.postImage} alt="" />
+        ) : (
+          <></>
+        )}
+      </div>
+
       <LikeButtonComponent currUser={currUser} post={post} />
     </div>
   ) : (
