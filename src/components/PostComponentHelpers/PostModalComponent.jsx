@@ -11,13 +11,19 @@ const ModalComponent = ({
   isEdit,
   updateStatus,
   uploadPostImage,
-  postImage,
   setPostImage,
+  postImage,
   currentPost,
+  setCurrentPost,
 }) => {
-  console.log(currentPost.postImage);
-
   const [progress, setProgress] = useState(0);
+  const resetStates = () => {
+    setStatus("");
+    setModalOpen(false);
+    setPostImage("");
+    setProgress(0);
+    setCurrentPost({});
+  };
   return (
     <>
       <Modal
@@ -25,23 +31,23 @@ const ModalComponent = ({
         centered
         open={modalOpen}
         onOk={() => {
-          setStatus("");
-          setModalOpen(false);
-          setPostImage("");
-          setProgress(0);
+          resetStates();
         }}
         onCancel={() => {
-          setStatus("");
-          setModalOpen(false);
-          setPostImage("");
-          setProgress(0);
+          resetStates();
         }}
         footer={[
           <Button
             key="submit"
             type="primary"
             disabled={status.length > 0 ? false : true}
-            onClick={isEdit ? updateStatus : handleStatus}
+            onClick={
+              isEdit
+                ? async () => {
+                    await updateStatus(), resetStates();
+                  }
+                : handleStatus
+            }
           >
             {isEdit ? "Update" : "Submit"}
           </Button>,
@@ -54,20 +60,14 @@ const ModalComponent = ({
           onChange={(e) => setStatus(e.target.value)}
           value={status}
         />
-        {progress === 0 || progress === 100 ? (
-          <></>
-        ) : (
+        {progress === 0 || progress === 100 ? null : (
           <Flex className="flex justify-center" wrap gap="small">
             <Progress type="circle" percent={progress} size={80} />
           </Flex>
         )}
 
-        {postImage.length > 0 || currentPost?.postImage.length ? (
-          <img
-            className="w-full"
-            src={postImage || currentPost?.postImage}
-            alt=""
-          />
+        {postImage?.length > 0 || currentPost?.postImage?.length ? (
+          <img src={postImage || currentPost.postImage} alt="" />
         ) : (
           <></>
         )}
@@ -78,6 +78,7 @@ const ModalComponent = ({
             className=" text-[#0073b1] cursor-pointer absolute bottom-5"
           />
         </label>
+
         <input
           type="file"
           id="pic-upload"

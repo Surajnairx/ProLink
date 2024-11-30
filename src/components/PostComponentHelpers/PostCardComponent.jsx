@@ -26,7 +26,7 @@ const PostCardComponent = ({ post, getEditData }) => {
     getConnections(currUser.userID, post.userID, setIsConnected);
   }, [currUser?.userID, post.userID]);
 
-  return isConnected ? (
+  return isConnected || currUser.userID === post.userID ? (
     <div className=" w-2/3 m-6  min-h-fit  bg-white rounded-lg flex flex-col">
       <div className="flex justify-between items-center">
         <div className="flex m-4">

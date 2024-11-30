@@ -13,7 +13,7 @@ const PostComponent = ({ currUser }) => {
   const [allPost, setAllPosts] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [currentPost, setCurrentPost] = useState({});
-  const [postImage, setPostImage] = useState({});
+  const [postImage, setPostImage] = useState("");
 
   const getUniqueID = () => {
     let id = uuid();
@@ -44,6 +44,7 @@ const PostComponent = ({ currUser }) => {
     setModalOpen(true);
     setCurrentPost(post);
     setStatus(post.post);
+    setPostImage(post.postImage);
     setIsEdit(true);
   };
   const updateStatus = () => {
@@ -98,9 +99,10 @@ const PostComponent = ({ currUser }) => {
         isEdit={isEdit}
         updateStatus={updateStatus}
         uploadPostImage={uploadPostImage}
-        postImage={postImage}
         setPostImage={setPostImage}
+        postImage={postImage}
         currentPost={currentPost}
+        setCurrentPost={setCurrentPost}
       />
       <div className="w-full flex flex-col gap-10 items-center">
         {allPost.map((post) => {
