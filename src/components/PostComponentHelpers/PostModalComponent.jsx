@@ -14,14 +14,9 @@ const ModalComponent = ({
   postImage,
   setPostImage,
   currentPost,
-<<<<<<< HEAD
-  setCurrentPost,
-}) => {
-=======
 }) => {
   console.log(currentPost.postImage);
 
->>>>>>> e74f62b39349a22361a9dc52cc1770804da7a820
   const [progress, setProgress] = useState(0);
   return (
     <>
@@ -34,20 +29,12 @@ const ModalComponent = ({
           setModalOpen(false);
           setPostImage("");
           setProgress(0);
-<<<<<<< HEAD
-          setCurrentPost({});
-=======
->>>>>>> e74f62b39349a22361a9dc52cc1770804da7a820
         }}
         onCancel={() => {
           setStatus("");
           setModalOpen(false);
           setPostImage("");
           setProgress(0);
-<<<<<<< HEAD
-          setCurrentPost({});
-=======
->>>>>>> e74f62b39349a22361a9dc52cc1770804da7a820
         }}
         footer={[
           <Button
@@ -75,19 +62,11 @@ const ModalComponent = ({
           </Flex>
         )}
 
-<<<<<<< HEAD
-        {postImage?.length > 0 || currentPost?.postImage?.length ? (
-          <img
-            className="w-full"
-            src={postImage || currentPost?.postImage}
-            alt="postImage"
-=======
         {postImage.length > 0 || currentPost?.postImage.length ? (
           <img
             className="w-full"
             src={postImage || currentPost?.postImage}
             alt=""
->>>>>>> e74f62b39349a22361a9dc52cc1770804da7a820
           />
         ) : (
           <></>
