@@ -22,12 +22,12 @@ const ConnectionComponent = () => {
   }, []);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-gray-300">
       <Navbar currUser={currUser} />
 
-      <div className=" m-5 p-3 grid grid-cols-4 gap-10  text-center ">
+      <div className="h-screen w-screen m-5 p-3 grid grid-cols-4 gap-10  text-center ">
         {allUsers.map((user) =>
-          currUser.userID == user.userID ? (
+          currUser.userID == user.userID || !user.about ? (
             <></>
           ) : (
             <ConnnectedUsersComponent

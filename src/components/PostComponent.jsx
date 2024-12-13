@@ -4,6 +4,7 @@ import PostModalComponent from "./PostComponentHelpers/PostModalComponent";
 import { Post, getPost, updatePost } from "../api/FirestoreAPI";
 import PostCardComponent from "./PostComponentHelpers/PostCardComponent";
 import { uploadPostImage } from "../api/ImageUploadAPI";
+import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import uuid from "react-uuid";
 
@@ -15,6 +16,7 @@ const PostComponent = ({ currUser }) => {
   const [currentPost, setCurrentPost] = useState({});
   const [postImage, setPostImage] = useState("");
 
+  const navigate = useNavigate();
   const getUniqueID = () => {
     let id = uuid();
     return id;
@@ -58,37 +60,64 @@ const PostComponent = ({ currUser }) => {
 
   return (
     <div className="flex flex-col gap-10  rounded-md items-center">
-      {currUser?.imageLink ? (
-        <div className="bg-white w-2/3 h-1/3 mt-20  border rounded-md flex flex-col gap-7 justify-center items-center">
-          <img
-            className=" -mt-16 object-cover object-center rounded-full p-3 ring-2 h-32 w-32 ring-gray-300 dark:ring-gray-500"
-            src={currUser?.imageLink}
-            alt=""
-          />
-          <div className="flex flex-col items-center gap-5">
-            <p className=" font-medium cursor-pointer hover:underline hover:text-blue-500">
-              {" "}
-              {currUser?.name}
+      {console.log(currUser)}
+      {currUser.college || currUser.company ? null : (
+        <div className="pt-10">
+          <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <a href="#">
+              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                Welcome! Let&apos;s s Set Up Your Profile
+              </h5>
+            </a>
+            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              Before you start exploring the app and its features, let&apos;s
+              take a moment to complete your profile. This will help us
+              personalize your experience and make sure you get the most out of
+              all the app has to offer.
             </p>
-            <p className="font-light text-gray-400 pb-3">
-              {currUser?.headline}
-            </p>
+            <a
+              href="#"
+              className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              onClick={() => navigate("/profile")}
+            >
+              Set Up Profile
+              <svg
+                className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 10"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M1 5h12m0 0L9 1m4 4L9 9"
+                />
+              </svg>
+            </a>
           </div>
         </div>
-      ) : (
-        <></>
       )}
 
       <div className="bg-white w-2/3 h-[100px] border rounded-md flex justify-center items-center mt-5">
-        <button
-          className="bg-white w-3/4 border-2  border-teal-400 p-3 text-center rounded-full text-black hover:bg-black hover:text-teal-400 hover:border-black"
-          onClick={() => {
-            setModalOpen(true);
-            setIsEdit(false);
-          }}
-        >
-          Start a post...
-        </button>
+        <div className="flex justify-center items-center w-full gap-10">
+          <img
+            className="object-cover object-center rounded-full ring-2 h-12 w-12 ring-gray-300 dark:ring-gray-500"
+            src={currUser?.imageLink}
+            alt=""
+          />
+          <button
+            className="bg-white w-3/4 border-2  border-teal-400 p-3 text-center rounded-full text-black hover:bg-black hover:text-teal-400 hover:border-black"
+            onClick={() => {
+              setModalOpen(true);
+              setIsEdit(false);
+            }}
+          >
+            Start a post...
+          </button>
+        </div>
       </div>
       <PostModalComponent
         modalOpen={modalOpen}

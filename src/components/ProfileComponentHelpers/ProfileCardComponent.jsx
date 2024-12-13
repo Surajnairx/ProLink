@@ -20,6 +20,7 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
   const [progress, setProgress] = useState(0);
 
   let location = useLocation();
+
   const getImage = (event) => {
     setCurrentImage(event.target.files[0]);
   };
@@ -38,7 +39,6 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
     if (location?.state?.id) {
       getSingleStatus(setAllPosts, location?.state?.id);
     }
-
     if (location?.state?.email) {
       getSingleUser(setCurrentProfile, location?.state?.email);
     }
@@ -47,7 +47,7 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
 
   return (
     <>
-      {modalOpen ? (
+      {modalOpen && (
         <FileUploadModal
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
@@ -56,97 +56,60 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
           currentImage={currentImage}
           progress={progress}
         />
-      ) : (
-        <></>
       )}
 
-      <div className="bg-neutral-100 m-8 rounded-md p-3">
+      <div className="bg-neutral-100 m-8 rounded-md p-6 relative">
         <img
-          className="object-cover object-center rounded-full p-3 m-3 ring-2 h-64 w-64 ring-gray-300 dark:ring-gray-500"
-          src={
-            Object.values(currentProfile).length === 0
-              ? currUser?.imageLink
-              : currentProfile?.imageLink
-          }
-          // onClick={() => setModalOpen(true)}
+          className="object-cover object-center rounded-full p-2 ring-2 h-64 w-64 ring-gray-300 dark:ring-gray-500 cursor-pointer hover:ring-teal-400 transition-all duration-200"
+          src={currentProfile?.imageLink || currUser?.imageLink}
           onClick={() =>
-            currUser.userID === currentProfile.userID ||
-            currentProfile.userID === undefined
-              ? setModalOpen(true)
-              : undefined
+            (currUser.userID === currentProfile.userID ||
+              !currentProfile.userID) &&
+            setModalOpen(true)
           }
-          alt=""
+          alt="Profile"
         />
-        {console.log(currUser.userID, currentProfile.userID)}
-
-        {currUser.userID === currentProfile.userID ||
-        currentProfile.userID === undefined ? (
-          <div className=" w-auto h-auto  absolute right-14  p2">
+        {currUser.userID === currentProfile.userID || !currentProfile.userID ? (
+          <div className="absolute top-3 right-3">
             <HiOutlinePencil
-              className=" text-4xl p-1 cursor-pointer hover:bg-slate-200 rounded-xl"
+              className="text-3xl p-1 cursor-pointer hover:bg-slate-200 rounded-full transition-all"
               onClick={onEdit}
             />
           </div>
-        ) : (
-          <></>
-        )}
+        ) : null}
 
-        {/* { ? (
-          <div className=" w-auto h-auto  absolute right-14  p2">
-            <HiOutlinePencil
-              className=" text-4xl p-1 cursor-pointer hover:bg-slate-200 rounded-xl"
-              onClick={onEdit}
-            />
-          </div>
-        ) : (
-          <></>
-        )} */}
-
-        <h3 className="text-black font-bold text-2xl">
-          {Object.values(currentProfile).length === 0
-            ? currUser?.name
-            : currentProfile?.name}
+        <h3 className="text-black font-bold text-2xl mt-4">
+          {currentProfile?.name || currUser?.name}
         </h3>
-        <div className="flex justify-between mt-2 ">
-          <p className="w-[350px] font-semibold">
-            {Object.values(currentProfile).length === 0
-              ? currUser?.headline
-              : currentProfile?.headline}
+        <div className="flex justify-between mt-2">
+          <p className="w-[350px] font-semibold text-gray-600">
+            {currentProfile?.headline || currUser?.headline}
           </p>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col text-gray-700">
             <p className="font-extrabold">
-              {Object.values(currentProfile).length === 0
-                ? currUser?.company
-                : currentProfile?.company}
+              {currentProfile?.company || currUser?.company}
             </p>
             <p className="font-extrabold">
-              {Object.values(currentProfile).length === 0
-                ? currUser?.college
-                : currentProfile?.college}
+              {currentProfile?.college || currUser?.college}
             </p>
           </div>
         </div>
-        <p className="py-5 font-semibold">
-          {Object.values(currentProfile).length === 0
-            ? currUser?.location
-            : currentProfile?.location}
+
+        <p className="py-4 font-semibold text-gray-700">
+          {currentProfile?.location || currUser?.location}
         </p>
+
         <a
-          href={
-            Object.values(currentProfile).length === 0
-              ? currUser?.website
-              : currentProfile?.website
-          }
-          className=" underline text-blue-600 cursor-pointer font-medium"
+          href={currentProfile?.website || currUser?.website}
+          className="underline text-blue-600 cursor-pointer font-medium"
         >
-          {Object.values(currentProfile).length === 0
-            ? currUser?.website
-            : currentProfile?.website}
+          {currentProfile?.website || currUser?.website}
         </a>
       </div>
+
       <div className="w-auto h-auto bg-neutral-100 m-8 p-3 rounded-md ">
-        <h1 className="font-bold text-xl mb-2">About</h1>
+        <h1 className="font-bold text-xl mb-2">🌐About</h1>
         <pre className="font-poppins text-pretty ">
           {Object.values(currentProfile).length === 0
             ? currUser?.about
@@ -159,22 +122,20 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
             : currentProfile?.skills}
         </p>
       </div>
+
       <div className="w-full flex flex-col justify-center items-center">
-        {Object.values(currentProfile).length === 0
-          ? allPost
-              .filter((item) => {
-                return item?.userEmail === currUser?.email;
-              })
-              .map((post) => {
-                return <PostCardComponent key={post.id} post={post} />;
-              })
-          : allPost
-              .filter((item) => {
-                return item.userEmail === currentProfile.email;
-              })
-              .map((post) => {
-                return <PostCardComponent key={post.id} post={post} />;
-              })}
+        {(currentProfile?.email || currUser?.email) && (
+          <>
+            {allPost
+              .filter(
+                (item) =>
+                  item.userEmail === (currentProfile?.email || currUser?.email)
+              )
+              .map((post) => (
+                <PostCardComponent key={post.id} post={post} />
+              ))}
+          </>
+        )}
       </div>
     </>
   );
