@@ -49,6 +49,7 @@ const PostComponent = ({ currUser }) => {
     setPostImage(post.postImage);
     setIsEdit(true);
   };
+
   const updateStatus = () => {
     updatePost(currentPost.id, status, postImage);
     setModalOpen(false);
@@ -59,17 +60,16 @@ const PostComponent = ({ currUser }) => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-10  rounded-md items-center">
-      {console.log(currUser)}
+    <div className="flex flex-col gap-10 rounded-md items-center px-4 sm:max-md:mt-44">
       {currUser.college || currUser.company ? null : (
         <div className="pt-10">
-          <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          <div className="max-w-sm w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
             <a href="#">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Welcome! Let&apos;s s Set Up Your Profile
+                Welcome! Let&apos;s Set Up Your Profile
               </h5>
             </a>
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 text-sm sm:text-base">
               Before you start exploring the app and its features, let&apos;s
               take a moment to complete your profile. This will help us
               personalize your experience and make sure you get the most out of
@@ -101,23 +101,21 @@ const PostComponent = ({ currUser }) => {
         </div>
       )}
 
-      <div className="bg-white w-2/3 h-[100px] border rounded-md flex justify-center items-center mt-5">
-        <div className="flex justify-center items-center w-full gap-10">
-          <img
-            className="object-cover object-center rounded-full ring-2 h-12 w-12 ring-gray-300 dark:ring-gray-500"
-            src={currUser?.imageLink}
-            alt=""
-          />
-          <button
-            className="bg-white w-3/4 border-2  border-teal-400 p-3 text-center rounded-full text-black hover:bg-black hover:text-teal-400 hover:border-black"
-            onClick={() => {
-              setModalOpen(true);
-              setIsEdit(false);
-            }}
-          >
-            Start a post...
-          </button>
-        </div>
+      <div className="bg-white w-2/3 h-[100px] border rounded-md flex justify-center items-center gap-3 mt-5 sm:max-md:w-full">
+        <img
+          className=" object-cover object-center rounded-full h-14 w-14 ring-gray-300 dark:ring-gray-500"
+          src={currUser?.imageLink}
+          alt=""
+        />
+        <button
+          className="bg-white w-3/4  border-2 border-teal-400 p-3 text-center rounded-full text-black hover:bg-black hover:text-teal-400 hover:border-black"
+          onClick={() => {
+            setModalOpen(true);
+            setIsEdit(false);
+          }}
+        >
+          Start a post...
+        </button>
       </div>
       <PostModalComponent
         modalOpen={modalOpen}
@@ -133,7 +131,7 @@ const PostComponent = ({ currUser }) => {
         currentPost={currentPost}
         setCurrentPost={setCurrentPost}
       />
-      <div className="w-full flex flex-col gap-10 items-center">
+      <div className="w-full flex flex-col gap-10 items-center mt-5">
         {allPost.map((post) => {
           return (
             <PostCardComponent

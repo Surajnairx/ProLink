@@ -22,17 +22,17 @@ const LoginComponent = () => {
   };
 
   return (
-    <div className="h-lvh flex flex-col font-bold justify-center items-center">
+    <div className="h-screen flex flex-col font-bold justify-center items-center px-5">
       <img
         src={Logo}
-        alt=""
-        className="w-[145px] rounded-full absolute top-[20px] left-[20px]"
+        alt="Logo"
+        className="w-[145px] rounded-full absolute top-[20px] left-[20px] sm:max-md:w-[80px]"
       />
 
-      <div className="flex flex-col gap-5 m-3 p-10">
+      <div className="flex flex-col gap-5 m-3 p-5 w-full max-w-md">
         <div className="mb-3 flex flex-col gap-2">
-          <h1 className=" text-3xl font-bold">Sign in</h1>
-          <p className="font-normal text-2xl">
+          <h1 className="text-2xl sm:text-3xl font-bold">Sign in</h1>
+          <p className="font-normal text-lg sm:text-2xl">
             Stay updated on your professional world
           </p>
         </div>
@@ -64,9 +64,9 @@ const LoginComponent = () => {
             Log In
           </button>
 
-          <p>
-            New to ProLink ?{" "}
-            <Link to="/register" className=" text-teal-400">
+          <p className="text-sm sm:text-base">
+            New to ProLink?{" "}
+            <Link to="/register" className="text-teal-400">
               Join Now
             </Link>
           </p>

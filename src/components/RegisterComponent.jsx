@@ -28,16 +28,16 @@ const RegisterComponent = () => {
   };
 
   return (
-    <div className="h-lvh flex flex-col font-bold justify-center items-center">
+    <div className="h-lvh flex flex-col font-bold justify-center items-center sm:max-md:pt-10">
       <img
         src={Logo}
         alt=""
-        className="w-[120px] rounded-full absolute top-[20px] left-[20px]"
+        className="w-[120px] rounded-full absolute top-[20px] left-[20px] sm:max-md:w-[80px] sm:max-md:top-[5px] sm:max-md:left-36"
       />
 
       <div className="flex flex-col gap-5 m-3 p-10">
-        <div className="mb-3 flex flex-col gap-2">
-          <h1 className=" text-2xl font-bold">
+        <div className="mb-3 flex flex-col gap-2 ">
+          <h1 className=" text-2xl font-bold sm:max-md:text-xl">
             Connect . Collaborate . Conquer
           </h1>
         </div>

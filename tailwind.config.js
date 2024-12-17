@@ -6,6 +6,11 @@ export default {
       fontFamily: {
         poppins: "Poppins",
       },
+      screens: {
+        sm: "300px",
+        md: "768px",
+        lg: "1024px",
+      },
     },
   },
   plugins: [],
