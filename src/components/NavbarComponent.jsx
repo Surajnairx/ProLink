@@ -83,7 +83,7 @@ const NavbarComponent = ({ currUser }) => {
   useEffect(() => getAllUsers(setUsers), []);
 
   return (
-    <div className="w-full h-[70px] bg-slate-200 flex justify-between items-center p-4 sm:max-md:flex-col sm:max-md:h-auto sm:max-md:gap-1 sm:max-md:absolute">
+    <div className="w-full h-[70px] bg-slate-200 flex justify-between items-center p-4 sm:max-md:flex-col sm:max-md:h-auto sm:max-md:gap-1">
       {/* Left Side: Logo and Search Box */}
       <div className="flex items-center gap-4 sm:max-md:flex-col sm:max-md:items-start sm:max-md:w-full sm:max-md:h-auto">
         <img
@@ -187,7 +187,7 @@ const NavbarComponent = ({ currUser }) => {
             </div>
           ) : null}
         </div>
-        <div className="">
+        <div>
           <button className="flex flex-col items-center" onClick={displayPopup}>
             <img
               className="object-cover object-center rounded-full mt-2 h-12 w-12 ring-gray-400 dark:ring-gray-400"
@@ -197,7 +197,10 @@ const NavbarComponent = ({ currUser }) => {
             <span className="hidden sm:max-md:block">Me 🡇</span>
           </button>
           {popupVisible && (
-            <div className="popup absolute top-20 right-5 z-[100] sm:max-md:right-2">
+            <div
+              className="popup absolute top-20 right-5 z-[100] sm:max-md:flex sm:max-md:top-1/3
+            sm:max-md:right-1/4 sm:max-md:mt-2"
+            >
               <ProfilePopup currUser={currUser} />
             </div>
           )}

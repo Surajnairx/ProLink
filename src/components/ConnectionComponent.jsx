@@ -25,7 +25,7 @@ const ConnectionComponent = () => {
     <div className=" flex flex-col">
       <Navbar currUser={currUser} />
 
-      <div className="h-full m-5 grid grid-cols-4 gap-10 text-center sm:max-md:mt-44 sm:max-md:flex sm:max-md:justify-center sm:max-md:items-center sm:max-md:flex-wrap">
+      <div className="h-full m-5 grid grid-cols-4 gap-10 text-center sm:max-md:flex sm:max-md:justify-center sm:max-md:items-center sm:max-md:flex-wrap">
         {allUsers.map((user) =>
           currUser.userID == user.userID || !user.about ? (
             <></>

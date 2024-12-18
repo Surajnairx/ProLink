@@ -18,7 +18,7 @@ const Header = ({ search, setSearch, handleSearch }) => {
 
   return (
     <>
-      <div className="bg-black text-white  p-5 py-16 flex justify-around items-center ">
+      <div className="bg-black text-white  p-5 py-16 flex justify-around items-center">
         <h1 className="text-2xl p-2">Open Job Listing</h1>
         <button
           className="p-3 border-2 bg-teal-400 text-black border-black rounded-md "
@@ -27,7 +27,7 @@ const Header = ({ search, setSearch, handleSearch }) => {
           Post a Job
         </button>
       </div>
-      <div className=" flex justify-around m-auto p-3 shadow-lg w-2/3 rounded-sm bg-white -mt-10 mb-2">
+      <div className=" flex justify-around m-auto p-3 shadow-lg w-2/3 rounded-sm bg-white -mt-10 mb-2 sm:max-md:w-full">
         <select
           value={search.jobType}
           name="jobType"

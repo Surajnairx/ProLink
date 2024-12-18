@@ -60,7 +60,7 @@ const PostComponent = ({ currUser }) => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-10 rounded-md items-center px-4 sm:max-md:mt-44">
+    <div className="flex flex-col gap-10 rounded-md items-center px-4 ">
       {currUser.college || currUser.company ? null : (
         <div className="pt-10">
           <div className="max-w-sm w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">

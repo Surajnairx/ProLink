@@ -58,7 +58,7 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
         />
       )}
 
-      <div className="bg-neutral-100 m-8 rounded-md p-6 relative">
+      <div className="bg-neutral-100 m-8 rounded-md p-6">
         <img
           className="object-cover object-center rounded-full p-2 ring-2 h-64 w-64 ring-gray-300 dark:ring-gray-500 cursor-pointer hover:ring-teal-400 transition-all duration-200"
           src={currentProfile?.imageLink || currUser?.imageLink}
@@ -70,9 +70,9 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
           alt="Profile"
         />
         {currUser.userID === currentProfile.userID || !currentProfile.userID ? (
-          <div className="absolute top-3 right-3">
+          <div className="">
             <HiOutlinePencil
-              className="text-3xl p-1 cursor-pointer hover:bg-slate-200 rounded-full transition-all"
+              className="text-3xl p-1 cursor-pointer hover:bg-slate-200 ransition-all"
               onClick={onEdit}
             />
           </div>

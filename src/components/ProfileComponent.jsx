@@ -15,15 +15,16 @@ const ProfileComponent = () => {
     getCurrentuser(setCurrUser);
   }, []);
   return (
-    <div>
+    <>
       <Navbar currUser={currUser} />
-
-      {edit ? (
-        <ProfileEdit currUser={currUser} onEdit={onEdit} />
-      ) : (
-        <ProfileCardComponent currUser={currUser} onEdit={onEdit} />
-      )}
-    </div>
+      <div className="">
+        {edit ? (
+          <ProfileEdit currUser={currUser} onEdit={onEdit} />
+        ) : (
+          <ProfileCardComponent currUser={currUser} onEdit={onEdit} />
+        )}
+      </div>
+    </>
   );
 };
 

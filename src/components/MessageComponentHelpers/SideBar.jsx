@@ -29,9 +29,11 @@ const SideBar = ({ currUser, allUsers }) => {
 
   return (
     <div className=" bg-stone-800  rounded-s-lg flex-1 border-r-2 border-slate-600">
-      <div className=" p-2 bg-black text-white  rounded-tl-lg">
-        <div className=" flex justify-between">
-          <p className="font-bold text-sm p-2 text-teal-400">Messaging</p>
+      <div className=" p-2 bg-black text-white rounded-tl-lg">
+        <div className=" flex justify-between sm:max-md:flex-col">
+          <p className="font-bold text-sm p-2 text-teal-400 sm:max-md:text-center">
+            Messaging
+          </p>
           <div className="flex items-center gap-2">
             <img
               className="object-cover object-center rounded-full ring-2 h-8 w-8 ring-gray-400 dark:ring-gray-400"
