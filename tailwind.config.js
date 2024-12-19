@@ -7,9 +7,9 @@ export default {
         poppins: "Poppins",
       },
       screens: {
-        sm: "300px",
+        sm: "0px",
         md: "768px",
-        lg: "1024px",
+        lg: "1324px",
       },
     },
   },
