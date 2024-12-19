@@ -16,7 +16,7 @@ const MessagingComponent = () => {
   return (
     <div>
       <Navbar currUser={currUser} />
-      <div className=" h-[calc(100vh_-_70px)] p-5 bg-white flex  justify-around rounded-md sm:max-md:pt-44">
+      <div className=" h-[calc(100vh_-_70px)] p-5 bg-white flex  justify-around rounded-md">
         <ChatContextProvider>
           <SideBar currUser={currUser} allUsers={allUsers} />
           <ChatDialogBox currUser={currUser} />
