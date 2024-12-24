@@ -3,7 +3,9 @@ import { Button, Modal } from "antd";
 import { useState } from "react";
 import { postJob } from "../../api/FirestoreAPI";
 
+// NewJobModal component for posting a new job
 const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
+  // State to hold job input fields
   const [jobInputs, setJobInputs] = useState({
     jobTitle: "",
     jobType: "",
@@ -14,6 +16,8 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
     skills: [],
     time: "",
   });
+
+  // Predefined list of skills to choose from
   const skills = [
     "HTML",
     "CSS",
@@ -24,15 +28,17 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
     "GitHub",
   ];
 
+  // Handle input field changes
   const getInput = (event) => {
     let { name, value } = event.target;
     let input = { [name]: value };
     setJobInputs({ ...jobInputs, ...input });
   };
 
+  // Handle the OK button to submit the job form
   const handleOk = () => {
     setIsModalOpen(false);
-    postJob(jobInputs);
+    postJob(jobInputs); // Call API to post the job
     setJobInputs({
       jobTitle: "",
       jobType: "",
@@ -43,9 +49,10 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
       jobDescription: "",
       skills: [],
       time: "",
-    });
+    }); // Reset input fields after submission
   };
 
+  // Handle the Cancel button to close the modal without submitting
   const handleCancel = () => {
     setIsModalOpen(false);
     setJobInputs({
@@ -58,28 +65,29 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
       jobDescription: "",
       skills: [],
       time: "",
-    });
+    }); // Reset input fields on cancel
   };
 
+  // Add or remove skills from the selected skills array
   const handleaddRemoveSkill = (skill) => {
     jobInputs.skills.includes(skill)
       ? setJobInputs((oldState) => ({
           ...oldState,
           skills: oldState.skills.filter((s) => s !== skill),
-        }))
+        })) // Remove skill if it exists
       : setJobInputs((oldState) => ({
           ...oldState,
           skills: oldState.skills.concat(skill),
-        }));
+        })); // Add skill if not already present
   };
 
   return (
     <>
       <Modal
         title="Post Job"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
+        open={isModalOpen} // Open state of the modal
+        onOk={handleOk} // Handle OK button click
+        onCancel={handleCancel} // Handle Cancel button click
         styles={{ body: { height: "450px" } }}
         footer={[
           <Button key="back" onClick={handleCancel}>
@@ -96,15 +104,16 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
               jobInputs.locationType &&
               jobInputs.websiteURL &&
               jobInputs.jobDescription
-                ? false
+                ? false // Enable Submit if all required fields are filled
                 : true
             }
-            onClick={handleOk}
+            onClick={handleOk} // Submit job on click
           >
             Submit
           </Button>,
         ]}
       >
+        {/* Job form inputs */}
         <div className="grid grid-cols-2 gap-2 justify-center text-white">
           <input
             className="p-3 text-base"
@@ -115,7 +124,6 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
             onChange={getInput}
             required
           />
-
           <select
             name="jobType"
             className=" text-slate-400 p-3 text-base"
@@ -127,7 +135,6 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
             <option value="Part time">Part time</option>
             <option value="Contract">Contract</option>
           </select>
-
           <input
             className="p-3 text-base"
             name="companyName"
@@ -137,7 +144,6 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
             value={jobInputs.companyName}
             required
           />
-
           <input
             className="p-3 text-base"
             name="websiteURL"
@@ -146,7 +152,6 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
             value={jobInputs.websiteURL}
             onChange={getInput}
           />
-
           <input
             className="p-3 text-base"
             type="type"
@@ -155,7 +160,6 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
             value={jobInputs.location}
             placeholder="Location"
           />
-
           <select
             name="locationType"
             defaultValue="Location Type"
@@ -169,6 +173,8 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
             <option value="On-site">On-site</option>
           </select>
         </div>
+
+        {/* Job description textarea */}
         <textarea
           rows={5}
           cols={7}
@@ -180,18 +186,19 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
           value={jobInputs.jobDescription}
           onChange={getInput}
         />
+
+        {/* Skills selection */}
         <h2 className="text-base font-semibold">Skill</h2>
         <div className="flex gap-2 flex-wrap pb-2">
           {skills.map((skill) => (
             <div
-              // className="bg-white text-black border-2 border-black font-semibold rounded-lg p-3"
               className={
                 jobInputs.skills.includes(skill)
                   ? "bg-black text-white border-2 border-black font-semibold rounded-lg p-3"
                   : "bg-white text-black border-2 border-black font-semibold rounded-lg p-3"
               }
               key={skill}
-              onClick={() => handleaddRemoveSkill(skill)}
+              onClick={() => handleaddRemoveSkill(skill)} // Toggle skill selection
             >
               {skill}
             </div>

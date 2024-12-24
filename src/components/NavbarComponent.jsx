@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import Logo from "../assets/HomeLogo.png";
 import ProfilePopup from "./ProfilePopup";
@@ -16,49 +14,57 @@ import { getAllUsers } from "../api/FirestoreAPI";
 import useFetchNotifications from "../hooks/useNotifications";
 
 const NavbarComponent = ({ currUser }) => {
+  // State for managing popup visibility, search box, and users search functionality
   const [popupVisible, setPopupVisible] = useState(false);
-  const [isSearch, setIsSearch] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
-  const [users, setUsers] = useState([]);
-  const [searchUser, setSearchUser] = useState([]);
-  const [hamburger, setHamburger] = useState(false);
+  const [isSearch, setIsSearch] = useState(false); // To control if search input box is expanded
+  const [searchInput, setSearchInput] = useState(""); // Search input field value
+  const [users, setUsers] = useState([]); // Stores all users
+  const [searchUser, setSearchUser] = useState([]); // Stores filtered search results
+  const [hamburger, setHamburger] = useState(false); // Manages hamburger menu visibility
 
+  // Fetch unread notifications for the current user
   let notification = useFetchNotifications(currUser).notifications;
 
+  // Filter unread notifications
   let isRead = notification
     ?.filter((item) => item.isRead === false)
     .map((notif) => notif.isRead);
 
+  // Function to toggle the profile popup visibility
   const displayPopup = () => {
     setPopupVisible(!popupVisible);
   };
 
+  // Navigation function for routing
   let navigate = useNavigate();
   const goToPage = (route) => {
-    setHamburger(!hamburger);
-    navigate(route);
+    setHamburger(!hamburger); // Close hamburger menu after navigation
+    navigate(route); // Navigate to the specified route
   };
 
+  // Handle user search by filtering the user list based on the search input
   const handleSearch = () => {
     if (searchInput !== "") {
       let searched = users.filter((user) => {
         return Object.values(user)
-          .join("")
+          .join("") // Joins all user properties as a string
           .toLowerCase()
-          .includes(searchInput.toLowerCase());
+          .includes(searchInput.toLowerCase()); // Filters based on lowercase search input
       });
-      setSearchUser(searched);
+      setSearchUser(searched); // Set filtered results
     } else {
-      setSearchUser(users);
+      setSearchUser(users); // If no input, reset the search results
     }
   };
 
+  // Close popup when clicked outside
   const handleClickOutside = (event) => {
     if (popupVisible && !event.target.closest(".popup")) {
       setPopupVisible(false);
     }
   };
 
+  // Open specific user profile page
   const openUser = (user) => {
     navigate("/profile", {
       state: {
@@ -68,17 +74,19 @@ const NavbarComponent = ({ currUser }) => {
     });
   };
 
+  // Debounce search functionality to improve performance (e.g., waits 1 second after typing)
   document.addEventListener("mousedown", handleClickOutside);
   useEffect(() => {
     let debounced = setTimeout(() => {
       handleSearch();
-    }, 1000);
+    }, 1000); // Wait for 1 second before triggering search
     return () => {
       clearTimeout(debounced),
         document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [searchInput]);
+  }, [searchInput]); // Effect triggers when searchInput changes
 
+  // Fetch users on component mount or when currUser changes
   useEffect(() => getAllUsers(setUsers), [currUser]);
 
   return (
@@ -89,7 +97,7 @@ const NavbarComponent = ({ currUser }) => {
           className="w-[66px] rounded-lg cursor-pointer"
           src={Logo}
           alt="Logo"
-          onClick={() => goToPage("/home")}
+          onClick={() => goToPage("/home")} // Go to home when logo is clicked
         />
 
         <div className="relative sm:max-md:w-full sm:max-md:m-auto">
@@ -99,20 +107,20 @@ const NavbarComponent = ({ currUser }) => {
             } sm:max-md:w-full`}
             placeholder="Search Users..."
             type="text"
-            onChange={(e) => setSearchInput(e.target.value)}
-            onClick={() => setIsSearch(!isSearch)}
-            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)} // Update search input value
+            onClick={() => setIsSearch(!isSearch)} // Toggle search box size on click
+            value={searchInput} // Bind input value to state
           />
           <button
             className={`absolute right-3 top-1/2 transform -translate-y-1/2 text-xl p-2 ${
               isSearch ? "block" : "hidden"
             }`}
             onClick={() => {
-              setIsSearch(false);
-              setSearchInput("");
+              setIsSearch(false); // Close search box
+              setSearchInput(""); // Clear input value
             }}
           >
-            &#10006;
+            &#10006; {/* Close button for search */}
           </button>
         </div>
       </div>
@@ -122,7 +130,7 @@ const NavbarComponent = ({ currUser }) => {
         <GiHamburgerMenu
           className=" absolute top-7 right-10"
           size={30}
-          onClick={() => setHamburger(!hamburger)}
+          onClick={() => setHamburger(!hamburger)} // Toggle hamburger menu visibility
         />
       </div>
 
@@ -134,11 +142,12 @@ const NavbarComponent = ({ currUser }) => {
             : "sm:max-md:hidden flex items-center gap-10 sm:max-md:disabled"
         }
       >
+        {/* Navigation Items */}
         <div className="flex flex-col items-center">
           <AiOutlineHome
             size={30}
             className="cursor-pointer"
-            onClick={() => goToPage("/home")}
+            onClick={() => goToPage("/home")} // Navigate to home page
           />
           <span className="hidden sm:max-md:block">Home</span>
         </div>
@@ -146,7 +155,7 @@ const NavbarComponent = ({ currUser }) => {
           <AiOutlineUserAdd
             size={30}
             className="cursor-pointer"
-            onClick={() => goToPage("/connections")}
+            onClick={() => goToPage("/connections")} // Navigate to connections page
           />
           <span className="hidden sm:max-md:block">Connect</span>
         </div>
@@ -154,7 +163,7 @@ const NavbarComponent = ({ currUser }) => {
           <BsBriefcase
             size={30}
             className="cursor-pointer"
-            onClick={() => goToPage("/jobs")}
+            onClick={() => goToPage("/jobs")} // Navigate to jobs page
           />
           <span className="hidden sm:max-md:block">Jobs</span>
         </div>
@@ -162,7 +171,7 @@ const NavbarComponent = ({ currUser }) => {
           <AiOutlineMessage
             size={30}
             className="cursor-pointer"
-            onClick={() => goToPage("/messaging")}
+            onClick={() => goToPage("/messaging")} // Navigate to messaging page
           />
           <span className="hidden sm:max-md:block">Messaging</span>
         </div>
@@ -173,12 +182,13 @@ const NavbarComponent = ({ currUser }) => {
             onClick={() =>
               navigate("/notification", {
                 state: {
-                  isRead: isRead.length,
+                  isRead: isRead.length, // Pass unread notifications count
                 },
               })
             }
           />
           <span className="hidden sm:max-md:block">Notification</span>
+          {/* Display unread notifications count */}
           {isRead.length ? (
             <div className="absolute bg-red-500 top-0 right-0 rounded-full text-white text-xs px-2 py-1">
               {isRead.length}
@@ -194,6 +204,7 @@ const NavbarComponent = ({ currUser }) => {
             />
             <span className="hidden sm:max-md:block">Me 🡇</span>
           </button>
+          {/* Display profile popup if visible */}
           {popupVisible && (
             <div
               className="popup absolute top-20 right-5 z-[100] sm:max-md:flex sm:max-md:top-1/3
@@ -219,7 +230,7 @@ const NavbarComponent = ({ currUser }) => {
               <div
                 className="flex rounded-md hover:bg-slate-100 p-3"
                 key={user.id}
-                onClick={() => openUser(user)}
+                onClick={() => openUser(user)} // Open user profile on click
               >
                 <img
                   className="object-cover object-center rounded-full p-1 ring-2 h-10 w-10 ring-gray-300 dark:ring-gray-500"

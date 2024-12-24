@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/prop-types */
 import { useState, useMemo } from "react";
 import PostCardComponent from "../PostComponentHelpers/PostCardComponent";
 import {
@@ -12,19 +10,22 @@ import { useLocation } from "react-router-dom";
 import FileUploadModal from "./FileUploadModal";
 import { HiOutlinePencil } from "react-icons/hi";
 
+// ProfileCardComponent for displaying and editing a user profile
 const ProfileCardComponent = ({ currUser, onEdit }) => {
-  const [allPost, setAllPosts] = useState([]);
-  const [currentProfile, setCurrentProfile] = useState({});
-  const [currentImage, setCurrentImage] = useState({});
-  const [modalOpen, setModalOpen] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [allPost, setAllPosts] = useState([]); // Stores all posts
+  const [currentProfile, setCurrentProfile] = useState({}); // Stores current profile information
+  const [currentImage, setCurrentImage] = useState({}); // Stores image to upload
+  const [modalOpen, setModalOpen] = useState(false); // Controls the modal visibility for image upload
+  const [progress, setProgress] = useState(0); // Tracks the progress of the image upload
 
-  let location = useLocation();
+  let location = useLocation(); // Get the current location, used for user profile
 
+  // Function to handle file input and set selected image
   const getImage = (event) => {
     setCurrentImage(event.target.files[0]);
   };
 
+  // Function to upload image using the imageUpload API
   const uploadImage = () => {
     imageUpload(
       currentImage,
@@ -35,19 +36,21 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
     );
   };
 
+  // useMemo hook to fetch data only when needed
   useMemo(() => {
     if (location?.state?.id) {
-      getSingleStatus(setAllPosts, location?.state?.id);
+      getSingleStatus(setAllPosts, location?.state?.id); // Fetch posts for a single user
     }
     if (location?.state?.email) {
-      getSingleUser(setCurrentProfile, location?.state?.email);
+      getSingleUser(setCurrentProfile, location?.state?.email); // Fetch user data by email
     }
-    getPost(setAllPosts);
-  }, []);
+    getPost(setAllPosts); // Fetch all posts
+  }, []); // Empty dependency array to run this code only once after initial render
 
   return (
     <>
       {modalOpen && (
+        // FileUploadModal for handling image uploads
         <FileUploadModal
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
@@ -59,24 +62,26 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
       )}
 
       <div className=" bg-neutral-100 rounded-md p-6  mx-auto shadow-lg mb-8 max-w-4xl">
-        {/* Profile Image */}
+        {/* Profile Image Section */}
         <div className="profile-image-container flex justify-center mb-6 relative">
           <img
             className="profile-image object-cover object-center rounded-full border-4 border-gray-300 hover:ring-4 hover:ring-teal-400 transition-all duration-200 cursor-pointer"
             src={currentProfile?.imageLink || currUser?.imageLink}
             onClick={() =>
+              // If the user is viewing their own profile or no profile is available, open the upload modal
               (currUser.userID === currentProfile.userID ||
                 !currentProfile.userID) &&
               setModalOpen(true)
             }
             alt="Profile"
           />
+          {/* Edit Icon visible if the current user is the same as the profile user */}
           {currUser.userID === currentProfile.userID ||
           !currentProfile.userID ? (
             <div className="edit-icon absolute top-0 right-0 p-2 bg-white rounded-full shadow-md cursor-pointer hover:bg-gray-200 transition">
               <HiOutlinePencil
                 className="text-2xl text-gray-700 hover:text-teal-500"
-                onClick={onEdit}
+                onClick={onEdit} // Trigger onEdit function on clicking the pencil icon
               />
             </div>
           ) : null}
@@ -142,6 +147,7 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
         <div className=" w-full flex flex-col justify-center items-center mt-8">
           {(currentProfile?.email || currUser?.email) && (
             <>
+              {/* Display user's posts filtered by email */}
               {allPost
                 .filter(
                   (item) =>

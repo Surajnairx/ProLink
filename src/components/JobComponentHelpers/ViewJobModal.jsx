@@ -1,22 +1,24 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Button, Modal } from "antd";
 
 const ViewJobModal = ({ open, setOpen, data }) => {
   const [loading, setLoading] = useState(false);
 
+  // Handle the "OK" button click to close the modal
   const handleOk = () => {
     setOpen(false);
   };
 
+  // Handle the "Apply" button click to simulate applying for the job
   const handleApply = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
       setOpen(false);
-    }, 3000);
+    }, 3000); // Simulate a delay of 3 seconds
   };
 
+  // Handle the "Cancel" button click to close the modal without taking action
   const handleCancel = () => {
     setOpen(false);
   };
@@ -49,13 +51,13 @@ const ViewJobModal = ({ open, setOpen, data }) => {
           </p>
           <p>Posted on: {data.time}</p>
           <p>Job Type: {data.jobType}</p>
-          <p>Job Location : {data.location}</p>
-          <p>Location Type : {data.locationType}</p>
+          <p>Job Location: {data.location}</p>
+          <p>Location Type: {data.locationType}</p>
           <p>
             Company name:{" "}
             <a className="font-bold underline" href={data.websiteURL}>
               {data.companyName}
-            </a>{" "}
+            </a>
           </p>
           <div className="flex flex-wrap">
             <p className="flex flex-wrap">
@@ -63,7 +65,7 @@ const ViewJobModal = ({ open, setOpen, data }) => {
             </p>
           </div>
 
-          {data.skils ? (
+          {data.skills && (
             <p className="flex items-center gap-2">
               Skills:
               {data.skills.map((skill) => (
@@ -72,8 +74,6 @@ const ViewJobModal = ({ open, setOpen, data }) => {
                 </p>
               ))}
             </p>
-          ) : (
-            <></>
           )}
         </div>
       </Modal>
