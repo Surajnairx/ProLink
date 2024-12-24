@@ -28,7 +28,7 @@ const RegisterComponent = () => {
   };
 
   return (
-    <div className="h-lvh flex flex-col font-bold justify-center items-center sm:max-md:pt-10">
+    <div className="h-lvh flex flex-col font-bold justify-center items-center sm:max-md:pt-10 bg-slate-200">
       <img
         src={Logo}
         alt=""

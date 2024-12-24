@@ -18,13 +18,13 @@ const NotificationCard = ({ notification }) => {
       {notification?.isRead ? (
         <></>
       ) : (
-        <div className=" flex justify-center items-center p-3">
+        <div className=" flex justify-center items-center cursor-pointer">
           <div
-            className="flex border-2 p-5 gap-2 rounded-md"
+            className="flex border-2 p-2 gap-2 rounded-md "
             onClick={() => handleNotification(notification.id)}
           >
             <img
-              className="object-cover object-center rounded-full p-3 ring-2 h-24 w-24 ring-gray-300 dark:ring-gray-500"
+              className=" object-cover object-center rounded-full p-2 ring-2 h-24 w-24 sm:max-md:w-20 sm:max-md:h-20 ring-gray-300 dark:ring-gray-500"
               src={currentProfile[0]?.imageLink}
               alt=""
             />
@@ -40,6 +40,7 @@ const NotificationCard = ({ notification }) => {
                 </p>
               )}
               <p>{notification.timeStamp}</p>
+              {console.log(notification)}
             </div>{" "}
           </div>
         </div>

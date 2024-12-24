@@ -48,7 +48,6 @@ const NavbarComponent = ({ currUser }) => {
           .includes(searchInput.toLowerCase());
       });
       setSearchUser(searched);
-      console.log(searchUser);
     } else {
       setSearchUser(users);
     }
@@ -80,10 +79,10 @@ const NavbarComponent = ({ currUser }) => {
     };
   }, [searchInput]);
 
-  useEffect(() => getAllUsers(setUsers), []);
+  useEffect(() => getAllUsers(setUsers), [currUser]);
 
   return (
-    <div className="w-full h-[70px] bg-slate-200 flex justify-between items-center p-4 sm:max-md:flex-col sm:max-md:h-auto sm:max-md:gap-1">
+    <div className="w-full h-[70px] bg-slate-200 flex justify-between shadow- items-center p-4 sm:max-md:flex-col sm:max-md:h-auto sm:max-md:gap-1">
       {/* Left Side: Logo and Search Box */}
       <div className="flex items-center gap-4 sm:max-md:flex-col sm:max-md:items-start sm:max-md:w-full sm:max-md:h-auto">
         <img
@@ -131,10 +130,9 @@ const NavbarComponent = ({ currUser }) => {
       <div
         className={
           hamburger
-            ? "flex sm:max-md:flex-col  items-center gap-10 w-full "
-            : "sm:max-md:hidden flex items-center gap-10"
+            ? "flex sm:max-md:flex-col  items-center gap-10"
+            : "sm:max-md:hidden flex items-center gap-10 sm:max-md:disabled"
         }
-        // className="flex items-center gap-10"
       >
         <div className="flex flex-col items-center">
           <AiOutlineHome

@@ -14,7 +14,7 @@ const ConnnectedUsersComponent = ({ currUser, user, connectUser }) => {
     <> </>
   ) : (
     <div
-      className="bg-gray-100 w-[300px] flex flex-col items-center justify-between h-[450px] rounded-xl p-5 m-10 border-stone-500 border-2 cursor-pointer hover:shadow-2xl "
+      className="bg-gray-100 w-[300px] flex flex-col items-center justify-between h-[450px] rounded-xl p-5 m-4 border-stone-500 border-2 cursor-pointer hover:shadow-2xl "
       key={user.userID}
     >
       <img

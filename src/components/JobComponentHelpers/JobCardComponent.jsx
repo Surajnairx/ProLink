@@ -14,7 +14,9 @@ const JobCardComponent = (props) => {
         <div className="flex flex-col items-center gap-2">
           <h1 className="p-3 font-semibold">{props.jobTitle}</h1>
           <button className="bg-teal-400 text-black font-semibold py-3 px-4 rounded-md">
-            <a href={props.websiteURL}>{props.companyName}</a>
+            <a href={props.websiteURL} target="_blank">
+              {props.companyName}
+            </a>
           </button>
         </div>
         {props.skills[0] ? (
