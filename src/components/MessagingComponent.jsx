@@ -24,7 +24,7 @@ const MessagingComponent = () => {
       <Navbar currUser={currUser} />
 
       {/* Main container for the messaging UI, adjusting height to fill the screen minus navbar */}
-      <div className="h-[calc(100vh_-_70px)] p-5 flex justify-around rounded-md">
+      <div className="h-[calc(100vh_-_70px)] p-5 flex justify-around rounded-md sm:max-md:hidden">
         {/* ChatContextProvider component to provide chat-related context to child components */}
         <ChatContextProvider>
           {/* SideBar component displaying a list of users and message threads */}
@@ -33,6 +33,11 @@ const MessagingComponent = () => {
           {/* ChatDialogBox component for displaying the selected chat's conversation */}
           <ChatDialogBox currUser={currUser} />
         </ChatContextProvider>
+      </div>
+      <div className="sm:max-md:block hidden mt-16 px-8 py-6 text-lg border-2 border-red-500 rounded-lg bg-white shadow-xl text-center">
+        <h1 className="font-semibold text-red-600">
+          To fully use this functionality, switch to desktop mode.
+        </h1>
       </div>
     </div>
   );

@@ -55,7 +55,11 @@ const ViewJobModal = ({ open, setOpen, data }) => {
           <p>Location Type: {data.locationType}</p>
           <p>
             Company name:{" "}
-            <a className="font-bold underline" href={data.websiteURL}>
+            <a
+              className="font-bold underline"
+              href={data.websiteURL}
+              target="_blank"
+            >
               {data.companyName}
             </a>
           </p>
@@ -64,17 +68,6 @@ const ViewJobModal = ({ open, setOpen, data }) => {
               Job description: <span>{data.jobDescription}</span>
             </p>
           </div>
-
-          {data.skills && (
-            <p className="flex items-center gap-2">
-              Skills:
-              {data.skills.map((skill) => (
-                <p className="bg-black text-white p-2 rounded-md" key={skill}>
-                  {skill}
-                </p>
-              ))}
-            </p>
-          )}
         </div>
       </Modal>
     </>

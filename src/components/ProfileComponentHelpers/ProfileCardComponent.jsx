@@ -1,11 +1,14 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import PostCardComponent from "../PostComponentHelpers/PostCardComponent";
 import {
   getPost,
   getSingleUser,
   getSingleStatus,
+  getConnections,
+  addConnection,
 } from "../../api/FirestoreAPI";
 import { imageUpload } from "../../api/ImageUploadAPI";
+import ButtonComponent from "../ButtonComponent";
 import { useLocation } from "react-router-dom";
 import FileUploadModal from "./FileUploadModal";
 import { HiOutlinePencil } from "react-icons/hi";
@@ -17,12 +20,25 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
   const [currentImage, setCurrentImage] = useState({}); // Stores image to upload
   const [modalOpen, setModalOpen] = useState(false); // Controls the modal visibility for image upload
   const [progress, setProgress] = useState(0); // Tracks the progress of the image upload
+  const [isConnected, setIsConnected] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   let location = useLocation(); // Get the current location, used for user profile
+
+  useEffect(() => {
+    if (currentProfile?.userID) {
+      getConnections(currUser.userID, currentProfile.userID, setIsConnected);
+    }
+    // Fetch if there's a connection
+  }, [currUser.userID, currentProfile?.userID]);
 
   // Function to handle file input and set selected image
   const getImage = (event) => {
     setCurrentImage(event.target.files[0]);
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   // Function to upload image using the imageUpload API
@@ -34,6 +50,13 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
       setProgress,
       setCurrentImage
     );
+  };
+
+  const connectUser = (id) => {
+    console.log(currUser.userID, id); // Logging the connection attempt (current user and target user)
+    addConnection(currUser.userID, id); // Add the target user to current user's connection list
+    getConnections(currUser.userID, currentProfile?.userID, setIsConnected);
+    console.log(isConnected);
   };
 
   // useMemo hook to fetch data only when needed
@@ -65,7 +88,7 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
         {/* Profile Image Section */}
         <div className="profile-image-container flex justify-center mb-6 relative">
           <img
-            className="profile-image object-cover object-center rounded-full border-4 border-gray-300 hover:ring-4 hover:ring-teal-400 transition-all duration-200 cursor-pointer"
+            className="h-60 w-60 profile-image object-cover object-center rounded-full border-4 border-gray-300 hover:ring-4 hover:ring-teal-400 transition-all duration-200 cursor-pointer"
             src={currentProfile?.imageLink || currUser?.imageLink}
             onClick={() =>
               // If the user is viewing their own profile or no profile is available, open the upload modal
@@ -92,6 +115,23 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
           <h3 className="profile-name text-3xl font-semibold text-gray-800 mb-2">
             {currentProfile?.name || currUser?.name}
           </h3>
+          {currentProfile.userID !== currUser.userID && currentProfile.name ? (
+            isConnected ? (
+              <h3 className="text-2xl font-semibold text-gray-300 mb-2">
+                Following
+              </h3>
+            ) : (
+              <>
+                <div className=" border-black">
+                  <ButtonComponent
+                    title={"Follow 🌐"} // The text and emoji on the button
+                    onClick={() => connectUser(currentProfile?.userID)} // Call connectUser function when the button is clicked
+                  />
+                </div>
+              </>
+            )
+          ) : null}
+
           <div className=" flex justify-center mb-4">
             <p className=" text-lg font-medium text-gray-600">
               {currentProfile?.headline || currUser?.headline}

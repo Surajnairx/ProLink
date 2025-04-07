@@ -16,7 +16,7 @@ const ChatDialogBox = ({ currUser }) => {
   }, [data.chatId]);
 
   return (
-    <div className="flex-[3] flex flex-col justify-between rounded-md">
+    <div className="flex-[3] flex flex-col justify-between rounded-md sm:max-md:flex-1">
       {messages[0] ? (
         <>
           {/* Chat header with user's profile image and username */}

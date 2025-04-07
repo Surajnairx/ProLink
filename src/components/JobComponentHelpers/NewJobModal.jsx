@@ -4,7 +4,7 @@ import { useState } from "react";
 import { postJob } from "../../api/FirestoreAPI";
 
 // NewJobModal component for posting a new job
-const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
+const NewJobModal = ({ isModalOpen, setIsModalOpen, currUser }) => {
   // State to hold job input fields
   const [jobInputs, setJobInputs] = useState({
     jobTitle: "",
@@ -15,18 +15,8 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
     locationType: "",
     skills: [],
     time: "",
+    userId: currUser.userID,
   });
-
-  // Predefined list of skills to choose from
-  const skills = [
-    "HTML",
-    "CSS",
-    "JavaScript",
-    "React",
-    "TailwindCSS",
-    "Git",
-    "GitHub",
-  ];
 
   // Handle input field changes
   const getInput = (event) => {
@@ -68,19 +58,6 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
     }); // Reset input fields on cancel
   };
 
-  // Add or remove skills from the selected skills array
-  const handleaddRemoveSkill = (skill) => {
-    jobInputs.skills.includes(skill)
-      ? setJobInputs((oldState) => ({
-          ...oldState,
-          skills: oldState.skills.filter((s) => s !== skill),
-        })) // Remove skill if it exists
-      : setJobInputs((oldState) => ({
-          ...oldState,
-          skills: oldState.skills.concat(skill),
-        })); // Add skill if not already present
-  };
-
   return (
     <>
       <Modal
@@ -88,7 +65,7 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
         open={isModalOpen} // Open state of the modal
         onOk={handleOk} // Handle OK button click
         onCancel={handleCancel} // Handle Cancel button click
-        styles={{ body: { height: "450px" } }}
+        styles={{ body: { height: "320px" } }}
         footer={[
           <Button key="back" onClick={handleCancel}>
             Return
@@ -188,22 +165,6 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen }) => {
         />
 
         {/* Skills selection */}
-        <h2 className="text-base font-semibold">Skill</h2>
-        <div className="flex gap-2 flex-wrap pb-2">
-          {skills.map((skill) => (
-            <div
-              className={
-                jobInputs.skills.includes(skill)
-                  ? "bg-black text-white border-2 border-black font-semibold rounded-lg p-3"
-                  : "bg-white text-black border-2 border-black font-semibold rounded-lg p-3"
-              }
-              key={skill}
-              onClick={() => handleaddRemoveSkill(skill)} // Toggle skill selection
-            >
-              {skill}
-            </div>
-          ))}
-        </div>
       </Modal>
     </>
   );

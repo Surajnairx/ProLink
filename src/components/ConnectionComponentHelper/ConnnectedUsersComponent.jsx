@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getConnections } from "../../api/FirestoreAPI"; // Import function to check if the user is already connected
 import ButtonComponent from "../ButtonComponent"; // Import ButtonComponent to render the follow button
 
 // ConnnectedUsersComponent: Displays a user profile with a follow button if not already connected
 const ConnnectedUsersComponent = ({ currUser, user, connectUser }) => {
+  let navigate = useNavigate(); // Hook to navigate between pages
   const [isConnected, setIsConnected] = useState(false);
 
   // Effect to check if the current user is already connected to the displayed user
@@ -20,6 +22,11 @@ const ConnnectedUsersComponent = ({ currUser, user, connectUser }) => {
     <div
       className="bg-gray-100 w-[300px] flex flex-col items-center justify-between h-[450px] rounded-xl p-5 m-4 border-stone-500 border-2 cursor-pointer hover:shadow-2xl "
       key={user.userID} // Use user.userID as the key for the component
+      onClick={() =>
+        navigate("/profile", {
+          state: { id: user?.userID, email: user.email },
+        })
+      }
     >
       {/* Display user profile picture */}
       <img
@@ -27,8 +34,11 @@ const ConnnectedUsersComponent = ({ currUser, user, connectUser }) => {
         src={user.imageLink} // Use user's image link for the profile picture
         alt="User Profile"
       />
+
       {/* Display user name */}
-      <p className="font-bold p-3">{user.name}</p>
+      <p className="font-bold p-3 hover:text-blue-600 hover:underline">
+        <a>{user.name}</a>
+      </p>
       {/* Display user's headline */}
       <p className="font-light p-3">{user.headline}</p>
       {/* Display user's location */}

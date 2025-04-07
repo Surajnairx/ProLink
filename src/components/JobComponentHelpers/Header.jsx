@@ -1,7 +1,7 @@
 import { useState } from "react"; // Importing useState for managing component state
 import NewJobModal from "./NewJobModal"; // Import the modal for posting a new job
 
-const Header = ({ search, setSearch, handleSearch }) => {
+const Header = ({ search, setSearch, handleSearch, currUser }) => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage the modal visibility
 
   // Function to open the modal
@@ -66,7 +66,11 @@ const Header = ({ search, setSearch, handleSearch }) => {
       </div>
 
       {/* New Job Modal */}
-      <NewJobModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <NewJobModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        currUser={currUser}
+      />
     </>
   );
 };

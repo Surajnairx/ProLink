@@ -49,6 +49,7 @@ const JobsComponent = () => {
         search={search}
         setSearch={setSearch}
         handleSearch={handleSearch}
+        currUser={currUser}
       />
 
       {/* If job search is active, display a button to clear the search */}
@@ -61,9 +62,7 @@ const JobsComponent = () => {
             ❌ Clear Search
           </p>
         </div>
-      ) : (
-        <></>
-      )}
+      ) : null}
 
       {/* Render the list of jobs */}
       {jobs.map((data) => (
