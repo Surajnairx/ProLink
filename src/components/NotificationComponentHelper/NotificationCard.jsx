@@ -23,7 +23,7 @@ const NotificationCard = ({ notification }) => {
         <></> // Return nothing if the notification is already read
       ) : (
         // Render the notification if it's unread
-        <div className="flex justify-center items-center cursor-pointer">
+        <div className="flex justify-center items-center cursor-pointer m-5">
           <div
             className="flex border-2 p-2 gap-2 rounded-md"
             onClick={() => handleNotification(notification.id)} // Mark notification as read on click

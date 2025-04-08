@@ -74,7 +74,7 @@ const RegisterComponent = () => {
 
         {/* Email input field */}
         <label htmlFor="email" className="text-lg">
-          Email or phone number
+          Enter your Email
         </label>
         <input
           className="p-3 text-cyan-50 rounded-md"
@@ -93,7 +93,6 @@ const RegisterComponent = () => {
           className="p-3 text-cyan-50 rounded-md"
           type="password"
           name="password"
-          maxLength="6"
           onChange={(event) =>
             setCredentials({ ...credentails, password: event.target.value })
           }
