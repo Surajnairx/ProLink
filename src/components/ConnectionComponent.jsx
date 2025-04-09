@@ -45,7 +45,7 @@ const ConnectionComponent = () => {
       </div>
 
       {/* Section for displaying the list of users to connect with */}
-      <div className="h-full flex justify-around gap-10 text-center sm:max-md:flex sm:max-md:justify-center sm:max-md:items-center sm:max-md:flex-wrap md:max-lg:flex md:max-lg:flex-wrap md:max-lg:justify-center md:max-lg:gap-4 md:max-lg:items-center">
+      <div className="h-full flex flex-wrap justify-start gap-10 m-7 text-center sm:max-md:flex sm:max-md:justify-center sm:max-md:items-center sm:max-md:flex-wrap md:max-lg:flex md:max-lg:flex-wrap md:max-lg:justify-center md:max-lg:gap-4 md:max-lg:items-center">
         {/* Loop through all users */}
         {allUsers.map((user) =>
           // Skip if the user is the current logged-in user or if the user doesn't have an 'about' field

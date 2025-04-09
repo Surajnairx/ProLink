@@ -464,7 +464,13 @@ export const getMessages = async (chatID, setMessages) => {
 };
 
 // Function to update messages in a chat
-export const updateMessages = async (chatId, senderId, receiverId, text) => {
+export const updateMessages = async (
+  chatId,
+  senderId,
+  receiverId,
+  text,
+  read
+) => {
   const timeStamp = () => {
     return moment().format("MMMM Do YYYY, h:mm");
   };
@@ -481,6 +487,7 @@ export const updateMessages = async (chatId, senderId, receiverId, text) => {
           senderId: senderId,
           receiverId: receiverId,
           date: timeStamp(),
+          read,
         }),
       });
     }
