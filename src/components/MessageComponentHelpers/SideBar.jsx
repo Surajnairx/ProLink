@@ -34,6 +34,9 @@ const SideBar = ({ currUser, allUsers }) => {
   const handleSelect = (user) => {
     // Handle starting a new chat with the selected user
     handleChats(currUser, user);
+    {
+      console.log(currUser, user);
+    }
     // Clear the search input after selection
     setSearchInput("");
   };

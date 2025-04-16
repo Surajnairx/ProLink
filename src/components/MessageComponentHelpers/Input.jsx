@@ -4,6 +4,7 @@ import { updateMessages } from "../../api/FirestoreAPI";
 
 const Input = ({ currUser, data }) => {
   const [text, setText] = useState(""); // Holds the typed message
+  const [read, setRead] = useState(false);
 
   // Handles the "Enter" key press to send the message
   const handleKey = (e) => {
@@ -14,7 +15,13 @@ const Input = ({ currUser, data }) => {
   const handleSend = () => {
     if (text !== "") {
       // Update the messages in Firestore with the new message
-      updateMessages(data.chatId, currUser.userID, data.user.currUserID, text);
+      updateMessages(
+        data.chatId,
+        currUser.userID,
+        data.user.currUserID,
+        text,
+        read
+      );
       setText(""); // Clear the input field after sending the message
     }
   };

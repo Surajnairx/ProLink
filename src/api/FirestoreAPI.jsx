@@ -487,7 +487,6 @@ export const updateMessages = async (
           senderId: senderId,
           receiverId: receiverId,
           date: timeStamp(),
-          read,
         }),
       });
     }
@@ -499,6 +498,8 @@ export const updateMessages = async (
     let docToUpdate = doc(userChatsRef, receiverId);
     updateDoc(docToUpdate, {
       [chatId + ".lastMessage"]: { text },
+      [chatId + ".read"]: read,
+      [chatId + ".recieverId"]: receiverId,
       [chatId + ".date"]: timeStamp(),
     });
   } catch (err) {
@@ -509,6 +510,9 @@ export const updateMessages = async (
     let docToUpdate = doc(userChatsRef, senderId);
     updateDoc(docToUpdate, {
       [chatId + ".lastMessage"]: { text },
+      [chatId + ".read"]: read,
+      [chatId + ".recieverId"]: receiverId,
+      [chatId + ".senderID"]: senderId,
       [chatId + ".date"]: timeStamp(),
     });
   } catch (err) {

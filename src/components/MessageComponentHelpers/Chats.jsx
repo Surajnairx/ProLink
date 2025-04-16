@@ -9,7 +9,6 @@ const Chats = ({ currUser }) => {
 
   useEffect(() => {
     getUserChats(setChats, currUser.userID); // Fetch chats for the current user
-    console.log(chats); // Logging the chats to check the state (could be removed)
   }, [currUser.userID]); // Runs when the user's ID changes
 
   const handleSelect = (e) => {
@@ -35,9 +34,17 @@ const Chats = ({ currUser }) => {
               />
               <div className="ml-2">
                 <h1 className="font-semibold">{chat[1].userInfo?.userName}</h1>
-                <p className="font-extralight truncate max-w-96">
-                  {chat[1].lastMessage?.text} {/* Display the last message */}
-                </p>
+                {chat[1].read === false &&
+                chat[1].recieverId === currUser.userID ? (
+                  <p className="font-normal text-teal-400 truncate max-w-96">
+                    {chat[1].lastMessage?.text}
+                  </p>
+                ) : (
+                  <p className="font-extralight truncate max-w-96">
+                    You: {chat[1].lastMessage?.text}
+                    {/* Display the last message */}
+                  </p>
+                )}
               </div>
             </div>
           ))
