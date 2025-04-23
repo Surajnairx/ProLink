@@ -57,7 +57,6 @@ const NotificationCard = ({ notification }) => {
               )}
               {/* Display the timestamp of the notification */}
               <p>{notification.timeStamp}</p>
-              {console.log(notification)} {/* Logging for debugging */}
             </div>
           </div>
         </div>
@@ -100,7 +99,6 @@ const NotificationCard = ({ notification }) => {
               )}
               {/* Display the timestamp of the notification */}
               <p>{notification.timeStamp}</p>
-              {console.log(notification)} {/* Logging for debugging */}
             </div>
           </div>
         </div>

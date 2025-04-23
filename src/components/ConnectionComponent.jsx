@@ -49,11 +49,10 @@ const ConnectionComponent = () => {
         {/* Loop through all users */}
         {allUsers.map((user) =>
           // Skip if the user is the current logged-in user or if the user doesn't have an 'about' field
-          currUser.userID == user.userID || !user.about ? (
-            <></> // Skip rendering if it's the current user or if 'about' field is missing
-          ) : (
+          currUser.userID == user.userID || !user.about ? null : ( // Skip rendering if it's the current user or if 'about' field is missing
             // Render the ConnnectedUsersComponent for each user that can be connected with
             <ConnnectedUsersComponent
+              key={user.userID}
               currUser={currUser} // Pass current user data
               user={user} // Pass the user data to display and interact with
               connectUser={connectUser} // Pass the function to handle connecting users
