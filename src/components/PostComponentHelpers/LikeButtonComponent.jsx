@@ -26,7 +26,7 @@ const LikeButtonComponent = ({ currUser, post }) => {
 
   // Handles the liking and unliking of a post
   const handleLike = () => {
-    likePost(currUser, post.userID, post.postID, liked); // Call the API to like or unlike the post
+    likePost(currUser, post, post.userID, post.postID, liked); // Call the API to like or unlike the post
   };
 
   // Handles the comment input change

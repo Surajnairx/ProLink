@@ -37,6 +37,7 @@ const NotificationComponent = () => {
           {/* Map over the notifications and render a NotificationCard for each */}
           {notifications.map((notification) => (
             <NotificationCard
+              currUser={currUser}
               notification={notification} // Pass notification data to the NotificationCard component
               key={notification.id} // Set unique key for each notification card
             />

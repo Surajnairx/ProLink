@@ -121,7 +121,7 @@ export const getSingleUser = (setCurrentUser, email) => {
 };
 
 // Function to handle post like functionality
-export const likePost = (currUser, postUser, postID, liked) => {
+export const likePost = (currUser, post, postUser, postID, liked) => {
   let type = "like";
   let userID = currUser.userID;
   try {
@@ -138,6 +138,7 @@ export const likePost = (currUser, postUser, postID, liked) => {
         const notificationData = {
           userID: currUser.userID,
           username: currUser.name,
+          post: post,
           recipientUserID: postUser,
           type: type,
           isRead: false,
@@ -195,6 +196,7 @@ export const postComment = (
       const notificationData = {
         userID: currUser.userID,
         username: currUser.name,
+        post: post,
         recipientUserID: recipientUserID,
         type: type,
         isRead: false,
