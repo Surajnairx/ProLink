@@ -199,7 +199,7 @@ const NavbarComponent = ({ currUser }) => {
           <button className="flex flex-col items-center" onClick={displayPopup}>
             <img
               className="object-cover object-center rounded-full mt-2 h-12 w-12 ring-gray-400 dark:ring-gray-400"
-              src={currUser.imageLink}
+              src={currUser?.imageLink}
               alt="Profile"
             />
             <span className="hidden sm:max-md:block">Me 🡇</span>

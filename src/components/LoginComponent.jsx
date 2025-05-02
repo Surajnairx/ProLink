@@ -43,7 +43,7 @@ const LoginComponent = () => {
       <img
         src={Logo}
         alt="Logo"
-        className="w-[145px] rounded-full absolute top-[20px] left-[20px] sm:max-md:w-[80px]"
+        className="w-[145px] rounded-full absolute top-[20px] left-[20px] sm:max-md:w-[70px]"
       />
 
       <div className="flex flex-col gap-5 m-3 p-5 w-full max-w-md">
@@ -88,17 +88,20 @@ const LoginComponent = () => {
         </div>
 
         {/* Login button and link to register page */}
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center items-center">
           <button
             className="border-2 border-black w-full p-2.5 mb-3 rounded-3xl hover:bg-teal-400"
             type="button"
             onClick={logIn} // Trigger logIn function when clicked
           >
-            Log In
+            Sign In
           </button>
+          <hr className="flex-grow border-t border-gray-300" />
+          <span className="mx-4 text-gray-500">or</span>
+          <hr className="flex-grow border-t border-gray-300" />
 
           {/* Link to register page for new users */}
-          <p className="text-sm sm:text-base">
+          <p className="text-sm sm:text-base mt-10">
             New to ProLink?{" "}
             <Link to="/register" className="text-teal-400">
               Join Now

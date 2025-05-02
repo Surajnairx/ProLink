@@ -27,10 +27,10 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
 
   useEffect(() => {
     if (currentProfile?.userID) {
-      getConnections(currUser.userID, currentProfile.userID, setIsConnected);
+      getConnections(currUser?.userID, currentProfile.userID, setIsConnected);
     }
     // Fetch if there's a connection
-  }, [currUser.userID, currentProfile?.userID]);
+  }, [currUser?.userID, currentProfile?.userID]);
 
   // Function to handle file input and set selected image
   const getImage = (event) => {
@@ -45,7 +45,7 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
   const uploadImage = () => {
     imageUpload(
       currentImage,
-      currUser.userID,
+      currUser?.userID,
       setModalOpen,
       setProgress,
       setCurrentImage
@@ -92,14 +92,14 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
             src={currentProfile?.imageLink || currUser?.imageLink}
             onClick={() =>
               // If the user is viewing their own profile or no profile is available, open the upload modal
-              (currUser.userID === currentProfile.userID ||
+              (currUser?.userID === currentProfile.userID ||
                 !currentProfile.userID) &&
               setModalOpen(true)
             }
             alt="Profile"
           />
           {/* Edit Icon visible if the current user is the same as the profile user */}
-          {currUser.userID === currentProfile.userID ||
+          {currUser?.userID === currentProfile.userID ||
           !currentProfile.userID ? (
             <div className="edit-icon absolute top-0 right-0 p-2 bg-white rounded-full shadow-md cursor-pointer hover:bg-gray-200 transition">
               <HiOutlinePencil
@@ -115,7 +115,8 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
           <h3 className="profile-name text-3xl font-semibold text-gray-800 mb-2">
             {currentProfile?.name || currUser?.name}
           </h3>
-          {currentProfile.userID !== currUser.userID && currentProfile.name ? (
+          {currentProfile.userID !== currUser?.userID &&
+          currentProfile?.name ? (
             isConnected ? (
               <h3 className="text-2xl font-semibold text-gray-300 mb-2">
                 Following

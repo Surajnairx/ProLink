@@ -72,7 +72,7 @@ const PostComponent = ({ currUser }) => {
   return (
     <div className="flex flex-col gap-10 rounded-md items-center px-4">
       {/* Check if the current user has a college or company set */}
-      {currUser.college || currUser.company ? null : (
+      {currUser?.college || currUser?.company ? null : (
         <div className="pt-10">
           {/* Display a message prompting the user to complete their profile */}
           <div className="max-w-sm w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">

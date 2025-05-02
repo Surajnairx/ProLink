@@ -8,12 +8,6 @@ import {
 // Importing the Firebase authentication instance
 import { auth } from "../firebaseConfig";
 
-/**
- * Function to handle user login with email and password
- * @param {string} email - The user's email
- * @param {string} password - The user's password
- * @returns {Promise} - Returns the response from Firebase authentication
- */
 export const LoginAPI = (email, password) => {
   try {
     // Attempting to sign in with email and password
