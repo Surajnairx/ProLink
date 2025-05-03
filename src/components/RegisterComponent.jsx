@@ -41,7 +41,7 @@ const RegisterComponent = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col font-bold justify-center items-center sm:max-lg:pt-10 bg-slate-200 sm:max-md:h-full">
+    <div className="h-screen flex flex-col font-bold justify-center items-center sm:max-lg:pt-10 bg-slate-200 sm:max-md:h-screen">
       {/* Logo */}
       <img
         src={Logo}
