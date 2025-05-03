@@ -1,8 +1,3 @@
-Rinzler
-rinzler9698
-Invisible
-
-Rinzler — 27/12/2024 20:03
 Installation and Operations Guide for the Project
 1. Introduction
 This guide provides the necessary steps to install and operate the project you have developed, following the project plan and development milestones. The system is built using modern web technologies like React, Firebase, Tailwind CSS, and others.
