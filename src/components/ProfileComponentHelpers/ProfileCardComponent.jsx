@@ -37,10 +37,6 @@ const ProfileCardComponent = ({ currUser, onEdit }) => {
     setCurrentImage(event.target.files[0]);
   };
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
   // Function to upload image using the imageUpload API
   const uploadImage = () => {
     imageUpload(

@@ -2,7 +2,8 @@
 import {
   signInWithEmailAndPassword, // Used to sign in with email and password
   createUserWithEmailAndPassword, // Used to register a new user with email and password
-  signOut, // Used to log out the current authenticated user
+  signOut,
+  sendEmailVerification, // Used to log out the current authenticated user
 } from "firebase/auth";
 
 // Importing the Firebase authentication instance
@@ -29,6 +30,9 @@ export const RegisterAPI = (email, password) => {
   try {
     // Attempting to create a new user with email and password
     let response = createUserWithEmailAndPassword(auth, email, password);
+    response.then(() => {
+      sendEmailVerification(auth.currentUser);
+    });
     return response;
   } catch (err) {
     // Catching and returning any errors that occur during registration

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"; // Link component for navigation
 import Logo from "../assets/Logo.png"; // Logo image import
 import { useNavigate } from "react-router-dom"; // Hook for navigating to other routes
 import { toast } from "react-toastify"; // For displaying toast notifications
+import { auth } from "../firebaseConfig";
 
 // LoginComponent functional component
 const LoginComponent = () => {
@@ -21,15 +22,19 @@ const LoginComponent = () => {
     try {
       // Call LoginAPI to authenticate the user with entered credentials
       let res = await LoginAPI(credentials.email, credentials.password);
+      if (auth.currentUser.emailVerified) {
+        // Display success message when login is successful
+        toast.success("Signed in Successfully");
 
-      // Display success message when login is successful
-      toast.success("Signed in Successfully");
+        // Store the user's email in localStorage for future use
+        localStorage.setItem("user-email", res.user.email);
 
-      // Store the user's email in localStorage for future use
-      localStorage.setItem("user-email", res.user.email);
-
-      // Navigate to the home page after successful login
-      navigate("/home");
+        // Navigate to the home page after successful login
+        navigate("/home");
+      } else {
+        navigate("/");
+        alert("Please Verify Your Email and Try Again");
+      }
     } catch (err) {
       // Log error and display error message if login fails (e.g., incorrect password or username)
       console.log(err);
@@ -96,12 +101,9 @@ const LoginComponent = () => {
           >
             Sign In
           </button>
-          <hr className="flex-grow border-t border-gray-300" />
-          <span className="mx-4 text-gray-500">or</span>
-          <hr className="flex-grow border-t border-gray-300" />
 
           {/* Link to register page for new users */}
-          <p className="text-sm sm:text-base mt-10">
+          <p className="text-sm sm:text-base ">
             New to ProLink?{" "}
             <Link to="/register" className="text-teal-400">
               Join Now

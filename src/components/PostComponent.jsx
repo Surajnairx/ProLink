@@ -78,7 +78,9 @@ const PostComponent = ({ currUser }) => {
           <div className="max-w-sm w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <a href="#">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Welcome! Let&apos;s Set Up Your Profile
+                Welcome To <span className="text-teal-400">ProLink</span> !{" "}
+                <br />
+                Let&apos;s Set Up Your Profile
               </h5>
             </a>
             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 text-sm sm:text-base">

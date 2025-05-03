@@ -20,7 +20,6 @@ const HomeComponent = () => {
 
       {/* PostComponent to display the posts, passing the current user data as a prop */}
       <PostComponent currUser={currUser} />
-      {console.log(currUser)}
     </div>
   );
 };

@@ -20,7 +20,7 @@ const RegisterComponent = () => {
       let res = await RegisterAPI(credentails.email, credentails.password);
 
       // Navigate to the home page after successful registration
-      navigate("/home");
+      navigate("/");
 
       // Post user data to Firestore
       postUserData({
@@ -29,14 +29,13 @@ const RegisterComponent = () => {
       });
 
       // Display success messages using toast notifications
-      toast.success("Account Created Successfully");
-      toast.success("Signed in Successfully");
+      toast.success("Verification Email Sent");
 
       // Save the user's email in localStorage for later use
       localStorage.setItem("user-email", res.user.email);
     } catch (err) {
       // Handle errors (e.g., if the email is already registered)
-      toast.error("Email Already Registered");
+      toast.error("Error During Registeration");
       console.log(err);
     }
   };

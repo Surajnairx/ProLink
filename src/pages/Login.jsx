@@ -14,8 +14,9 @@ const Login = () => {
     // Listening to Firebase auth state changes to check if the user is already authenticated.
     onAuthStateChanged(auth, (res) => {
       // If the user is authenticated (res contains an accessToken), redirect to the home page.
-      if (res?.accessToken) {
-        navigate("/home"); // Navigate the user to the '/home' route if authenticated.
+      if (res?.accessToken && auth.currentUser.emailVerified) {
+        console.log(auth.currentUser.emailVerified);
+        // navigate("/home"); // Navigate the user to the '/home' route if authenticated.
       } else {
         setLoader(false); // If not authenticated, stop showing the loading spinner.
       }
