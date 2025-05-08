@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Button, Modal } from "antd";
+import { useEffect } from "react";
 import { useState } from "react";
 import { postJob } from "../../api/FirestoreAPI";
 
@@ -15,8 +16,17 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen, currUser }) => {
     locationType: "",
     skills: [],
     time: "",
-    userId: currUser.userID,
+    userId: "",
   });
+
+  useEffect(() => {
+    if (currUser?.userID) {
+      setJobInputs((prev) => ({
+        ...prev,
+        userId: currUser.userID,
+      }));
+    }
+  }, [currUser]);
 
   // Handle input field changes
   const getInput = (event) => {
@@ -29,6 +39,7 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen, currUser }) => {
   const handleOk = () => {
     setIsModalOpen(false);
     postJob(jobInputs); // Call API to post the job
+    console.log(jobInputs);
     setJobInputs({
       jobTitle: "",
       jobType: "",
@@ -37,8 +48,8 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen, currUser }) => {
       location: "",
       locationType: "",
       jobDescription: "",
-      skills: [],
       time: "",
+      userId: currUser.userID,
     }); // Reset input fields after submission
   };
 
@@ -53,8 +64,8 @@ const NewJobModal = ({ isModalOpen, setIsModalOpen, currUser }) => {
       location: "",
       locationType: "",
       jobDescription: "",
-      skills: [],
       time: "",
+      userId: currUser.userID,
     }); // Reset input fields on cancel
   };
 

@@ -93,15 +93,17 @@ const PostCardComponent = ({ post, getEditData }) => {
       </pre>
 
       {/* Post image (if available) */}
-      <div className="w-full m-auto rounded-lg p-20 sm:max-md:p-0">
-        {post.postImage && (
-          <img
-            className="rounded-lg w-full h-auto"
-            src={post.postImage}
-            alt="Post content"
-          />
-        )}
-      </div>
+      {post.postImage ? (
+        <div className="w-full m-auto rounded-lg p-20 sm:max-md:p-0">
+          {post.postImage && (
+            <img
+              className="rounded-lg w-full h-auto"
+              src={post.postImage}
+              alt="Post content"
+            />
+          )}
+        </div>
+      ) : null}
 
       {/* Like button and comments section */}
       <LikeButtonComponent currUser={currUser} post={post} />

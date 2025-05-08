@@ -25,23 +25,6 @@ const JobCardComponent = (props) => {
           </button>
         </div>
 
-        {/* Skills Section - Only Display if Skills are Provided */}
-        {props.skills[0] ? (
-          <div className="flex flex-col justify-evenly items-center p-4">
-            <h1 className="font-medium pb-5">Skills</h1>
-            <ul className="flex justify-center items-center gap-5 flex-wrap">
-              {/* Mapping through the skills array and displaying each skill */}
-              {props.skills?.map((skill) => (
-                <li className="bg-black text-white p-2 rounded-lg" key={skill}>
-                  {skill}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : (
-          <></> // If no skills are provided, nothing will be rendered
-        )}
-
         {/* Job Info Section */}
         <div className="flex flex-col px-10 justify-evenly items-center gap-2 pt-3">
           <div className="flex gap-3">

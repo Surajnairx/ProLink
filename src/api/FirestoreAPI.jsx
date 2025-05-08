@@ -331,6 +331,7 @@ export const readNotification = async (id) => {
 // Function to post a job
 export const postJob = async (object) => {
   let time = moment().format("MMMM Do YYYY");
+  console.log(object);
   let data = { ...object, time: time };
   addDoc(jobRef, data)
     .then(() => {
